@@ -1,0 +1,24 @@
+extends ../../layouts/default.pug
+
+block main
+  .container.mt-5
+    .row.justify-content-center
+      .col-md-6
+        .card.shadow-lg.rounded-4.border-0
+          .card-body.p-4
+            h2.text-center.mb-4.text-primary Đăng nhập
+
+            form(action="/users/login" method="POST")
+              .mb-3
+                label.form-label(for="email") Email
+                input.form-control.rounded-pill(type="email", name="email", id="email", placeholder="Nhập email", required)
+
+              .mb-3
+                label.form-label(for="password") Mật khẩu
+                input.form-control.rounded-pill(type="password", name="password", id="password", placeholder="Nhập mật khẩu", required)
+
+              button.btn.btn-primary.w-100.rounded-pill.mt-3(type="submit") Đăng nhập
+
+              .text-center.mt-3
+                span.text-muted Chưa có tài khoản?
+                a(href="/users/register").text-decoration-none.ms-1 Đăng ký ngay

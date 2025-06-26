@@ -1,0 +1,25 @@
+header.header
+  .container
+    .row.align-items-center
+      .col-3
+        .inner-logo
+          a(href="/")
+            h2 Logo
+
+      .col-9
+        .inner-menu
+          ul
+            li
+              a(href="/") Trang chủ
+            li
+              a(href="/categories") Danh mục
+            li
+              a(href="/cart") Giỏ hàng (<span mini-cart>0</span>)
+            if(user)
+              li 
+                a(href="/users/logout") Đăng xuất
+            else
+              li 
+                a(href="/users/login") Đăng nhập
+              li 
+                  a(href="/users/register") Đăng ký

@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+      "target": "ES6",
+      "module": "CommonJS",        // ✅ đổi từ "commonjs" sang "ESNext"
+      "removeComments": true,
+      "esModuleInterop": true,
+      "outDir": "dist"
+    }
+  }
+  
