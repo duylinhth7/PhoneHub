@@ -25,3 +25,33 @@ export const login = (req: Request, res: Response, next: NextFunction) => {
   };
   next();
 };
+
+export const forgetPassword = (req:Request, res:Response, next:NextFunction) => {
+  const email:String = req.body.email;
+  if(!email){
+    req.flash("error", "Vui lòng nhập đầy đủ thông tin!");
+    return res.redirect("/users/password/forget");
+  };
+  next();
+}
+
+
+export const validateOtp = (req:Request, res:Response, next:NextFunction) => {
+  if(!req.body.otp || !req.body.email){
+    req.flash("error", "Vui lòng điền đầy đủ thông tin!");
+    return res.redirect("/users/password/forget");
+  };
+  next();
+}
+
+export const validateResetPassword = (req:Request, res:Response, next:NextFunction) => {
+  if(!req.body.password || !req.body.confirmPassword){
+    req.flash("error", "Vui lòng nhập đầy đủ thông tin!");
+    return res.redirect("/users/password/reset");
+  };
+  if(req.body.password !== req.body.confirmPassword){
+    req.flash("error", "Xác nhận mật khẩu không trùng khớp!");
+    return res.redirect("/users/password/reset");
+  };
+  next();
+}

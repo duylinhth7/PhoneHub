@@ -16,7 +16,7 @@ export const authentication = async (
         res.locals.user = user;
       }
     } catch (error) {
-
+      console.log("Đã xảy ra lỗi: ", error);
     }
   }
   next();

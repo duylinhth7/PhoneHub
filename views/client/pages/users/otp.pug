@@ -1,0 +1,37 @@
+extends ../../layouts/default.pug
+
+block main
+  .container.mt-5
+    .row.justify-content-center
+      .col-md-6
+        .card.shadow-lg.rounded-4.border-0
+          .card-body.p-4
+            h2.text-center.mb-4.text-primary Xác minh OTP
+
+            form(action="/users/password/otp" method="POST")
+              .mb-3
+                label.form-label(for="email") Email
+                input.form-control.rounded-pill(
+                  type="email",
+                  name="email",
+                  id="email",
+                  value=email
+                  required
+                  readonly
+                )
+
+              .mb-3
+                label.form-label(for="otp") Mã OTP
+                input.form-control.rounded-pill(
+                  type="text",
+                  name="otp",
+                  id="otp",
+                  placeholder="Nhập mã OTP",
+                  maxlength="5",
+                  required
+                )
+
+              button.btn.btn-success.w-100.rounded-pill.mt-3(type="submit") Xác minh mã OTP
+
+              .text-center.mt-3
+                a(href="/users/password/forget").text-decoration-none.text-muted Gửi lại mã OTP?
