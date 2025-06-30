@@ -1,4 +1,10 @@
 extends ../../layouts/default.pug
-
+include ../../mixins/productCart.pug
 
 block main
+  .container.mt-5
+    h2.text-primary.text-center.mb-4 Sản phẩm nổi bật
+
+    .row.row-cols-1.row-cols-md-4.g-4
+      each product in productsFeatured
+        +productCard(product)

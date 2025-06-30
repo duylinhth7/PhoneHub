@@ -1,0 +1,15 @@
+//- views/client/includes/mixins.pug
+
+mixin productCard(product)
+  .col
+    .card.h-100.shadow.rounded-4.border-0
+      a(href=`/products/${product.slug}`).text-decoration-none
+        img.card-img-top(src=product.image, alt=product.title)
+      .card-body
+        h6.card-title.text-dark= product.title
+        p.text-danger.mb-1= Number(product.special_price).toLocaleString() + " ₫"
+        if product.discount > 0
+          p.text-muted.mb-1
+            del= Number(product.price).toLocaleString() + " ₫"
+            span.text-success.ms-2 Giảm #{product.discount}%
+        span.badge(class=product.stock > 0 ? "bg-success" : "bg-secondary")= product.stock > 0 ? "Còn hàng" : "Hết hàng"
