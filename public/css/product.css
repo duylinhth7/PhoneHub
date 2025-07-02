@@ -1,0 +1,77 @@
+.product-card {
+  display: block; /* Quan trọng: để có padding, margin, height như thẻ div */
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  height: 100%;
+  transition: transform 0.2s ease;
+  text-decoration: none; /* Bỏ gạch chân */
+  color: inherit; /* Giữ màu chữ gốc */
+  cursor: pointer;
+}
+
+.product-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  text-decoration: none;
+}
+
+
+.product-card:hover {
+  transform: scale(1.02);
+}
+
+.product-card .image {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.product-card .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 6px;
+}
+
+.product-card .discount {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: red;
+  color: white;
+  padding: 3px 6px;
+  font-size: 12px;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+.product-card .title h3 {
+  font-size: 16px;
+  margin: 12px 0 6px;
+  line-height: 1.3;
+  height: 48px; /* Giới hạn chiều cao 2 dòng */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-card .price {
+  margin-top: 8px;
+}
+
+.product-card .special_price {
+  font-size: 18px;
+  color: #e60023;
+  font-weight: bold;
+}
+
+.product-card .old_price {
+  font-size: 14px;
+  color: gray;
+  text-decoration: line-through;
+}

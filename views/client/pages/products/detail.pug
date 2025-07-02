@@ -1,0 +1,34 @@
+extends ../../layouts/default
+block css 
+    link(rel="stylesheet", href="/css/product-detail.css")
+
+block main 
+    .product-detail 
+        .container 
+            .row 
+                .col-6 
+                    .inner-images 
+                        div(class="swiper mySwiper2")
+                            div(class="swiper-wrapper")
+                                each image in detailProduct.images 
+                                    div(class="swiper-slide")
+                                        img(src=image)
+                            div(class="swiper-button-next")
+                            div(class="swiper-button-prev")
+                        div(class="swiper mySwiper")
+                            div(class="swiper-wrapper")
+                                each image in detailProduct.images 
+                                    div(class="swiper-slide")
+                                        img(src=image)
+                .col-md-6
+                    .inner-info
+                        h3.title= detailProduct.title
+                        .special_price Giá đặc biệt: #{(+detailProduct.special_price).toLocaleString('vi-VN')}₫
+                        .old_price Giá cũ: #{(+detailProduct.price).toLocaleString('vi-VN')}₫
+                        .discount Giảm tới: #{detailProduct.discount}%
+                        .stock Số lượng còn lại: #{detailProduct.stock}
+
+                        form(id="formAddToCart" phone-id=`${detailProduct.id}`)
+                            input(type="number" name="quantity" min=1 max=detailProduct.stock value=1)
+                            button(type="submit") Thêm vào giỏ hàng
+

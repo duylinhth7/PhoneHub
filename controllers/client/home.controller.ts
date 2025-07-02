@@ -11,17 +11,18 @@ export const home = async (req: Request, res: Response): Promise<void> => {
         INNER JOIN categories 
         ON product.categoryId = categories.id
         WHERE product.deleted = 0
+        LIMIT 12
         `, 
         {
       type: QueryTypes.SELECT,
     });
     for(const item of products){
         item["images"] = JSON.parse(item["images"]);
-        item["image"] = item["images"][0];
+        item["image"] = item["images"][1];
     }
     res.render("client/pages/home/index", {
       title: "Trang chủ",
-      productsFeatured: products
+      products: products
     });
   } catch (error) {
     console.log("Lỗi:" , error)
