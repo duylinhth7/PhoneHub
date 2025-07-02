@@ -9,13 +9,16 @@ const Order = sequelize.define("Order", {
   },
   userId: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
     references: {   
       model: 'users', // tên bảng trong DB
       key: 'id'
     },
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
+  },
+    fullname: {
+    type: DataTypes.STRING(100)
   },
   address: {
     type: DataTypes.TEXT,

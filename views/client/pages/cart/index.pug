@@ -1,22 +1,24 @@
 extends ../../layouts/default.pug
-
+block css 
+  link(rel="stylesheet", href="/css/cart.css")
 block main
   .container.my-3
     .row
       .col-12
-        table(class="table table-bordered" table-cart)
-          thead
-            tr
-              th STT
-              th Ảnh
-              th Tiêu đề
-              th Giá
-              th Số lượng
-              th Tổng tiền
-              th Hành động
-          tbody
-        
-        h5(class="text-right mb-4") Tổng đơn hàng: <span total-price>0</span>đ  
+        div.cartDetail__table
+          table(class="table table-bordered" table-cart)
+            thead
+              tr
+                th STT
+                th Ảnh
+                th Tiêu đề
+                th Giá
+                th Số lượng
+                th Tổng tiền
+                th Hành động
+            tbody
+          
+          h5(class="text-right mb-4") Tổng đơn hàng: <span total-price>0</span>đ  
 
     .row
       .col-12
@@ -47,6 +49,14 @@ block main
               class="form-control"
               id="note"
               name="note"
+              rows="2"
+            )
+          div(class="form-group")
+            label(for="address") Địa chỉ nhận hàng
+            textarea(
+              class="form-control"
+              id="address"
+              name="address"
               rows="2"
             )
           div(class="form-group")

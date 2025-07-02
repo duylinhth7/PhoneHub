@@ -110,13 +110,13 @@ const drawCart = () => {
               </a>
             </td>
             <td>
-              ${item.special_price.toLocaleString()}đ
+              ${item.special_price.toLocaleString("vi-VI")}đ
             </td>
             <td>
               <input type="number" name="quantity" quantity value="${item.quantity}" min="1" max=${item.stock} item-id="${item.id}" style="width: 60px">
             </td>
             <td>
-              ${item.totalPrice.toLocaleString()}đ
+              ${item.totalPrice.toLocaleString("vi-VI")}đ
             </td>
             <td>
               <button class="btn btn-sm btn-danger" btn-delete="${item.id}">Xóa</button>
@@ -128,7 +128,7 @@ const drawCart = () => {
                     tbody.innerHTML = htmls.join(" ")
                 }
                 const innerTotal = document.querySelector("[total-price]");
-                innerTotal.innerHTML = total.toLocaleString()
+                innerTotal.innerHTML = total.toLocaleString("vi-VI")
                 updateQuantity();
                 deleteProduct();
                 miniCart()
@@ -150,7 +150,7 @@ const updateQuantity = () => {
                 if (newQuantity > 0) {
                     const cart = JSON.parse(localStorage.getItem("cart"));
                     const exitsItem = cart.find(item => item.productId === productId);
-                    if(exitsItem){
+                    if (exitsItem) {
                         exitsItem.quantity = newQuantity;
                         localStorage.setItem("cart", JSON.stringify(cart));
                         drawCart()
@@ -166,16 +166,49 @@ const updateQuantity = () => {
 //Xóa sản phẩn khỏi giỏ hàng
 const deleteProduct = () => {
     const listButtonDelete = document.querySelectorAll("[table-cart] [btn-delete]");
-    if(listButtonDelete){
+    if (listButtonDelete) {
         listButtonDelete.forEach(button => {
             button.addEventListener("click", () => {
                 const productId = button.getAttribute("btn-delete");
                 const cart = JSON.parse(localStorage.getItem("cart"));
                 const newCart = cart.filter(item => item.productId != productId);
                 localStorage.setItem("cart", JSON.stringify(newCart));
-                drawCart(); 
-            } )
+                drawCart();
+            })
         })
     }
 }
 //End xóa sản phẩm khỏi giỏ hàng
+
+
+//Đặt sản phẩm
+const formOrder = document.querySelector("[form-order]");
+if (formOrder) {
+    formOrder.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const infoOrder = {
+            fullName: e.target.fullName.value,
+            phone: e.target.phone.value,
+            note: e.target.note.value,
+            address: e.target.address.value
+        };
+        const dataOrder = {
+            infoOrder: infoOrder,
+            cart: JSON.parse(localStorage.getItem("cart"))
+        }
+        fetch("/order", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dataOrder)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.code == 200) {
+                    localStorage.setItem("cart", '[]');
+                }
+            })
+    })
+}
+//End đặt sản phẩm
