@@ -14,6 +14,10 @@ const saltRounds = 10;
 
 //[GET] /users/register;
 export const register = async (req: Request, res: Response) => {
+  if(res.locals.user){
+    req.flash("error", "Vui lòng đăng xuất trước!")
+    return res.redirect("/")
+  };
   res.render("client/pages/users/register", {
     title: "Tạo tài khoản",
   });
@@ -71,6 +75,10 @@ export const logout = async (req: Request, res: Response) => {
 
 //[GET] /users/login
 export const login = async (req: Request, res: Response) => {
+    if(res.locals.user){
+    req.flash("error", "Vui lòng đăng xuất trước!")
+    return res.redirect("/")
+  };
   res.render("client/pages/users/login", {
     title: "Trang đăng nhập",
   });

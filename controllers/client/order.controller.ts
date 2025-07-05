@@ -10,9 +10,10 @@ export const index = async (req: Request, res: Response) => {
   try {
     const user = res.locals.user;
 
-    //Dùng truy vấn để lấy ra danh sách đơn hàng
-    const orders = await sequelize.query(
-      `
+    if (user) {
+      //Dùng truy vấn để lấy ra danh sách đơn hàng
+      const orders = await sequelize.query(
+        `
       SELECT 
       orders.id, 
       orders.createdAt, 
@@ -24,15 +25,13 @@ export const index = async (req: Request, res: Response) => {
       GROUP BY orders.id, orders.createdAt, orders.status
       ORDER BY orders.createdAt DESC;
       `,
-      {
-        replacements: {
-          userId: user.userId,
-        },
-        type: QueryTypes.SELECT,
-      }
-    );
-
-    if (user) {
+        {
+          replacements: {
+            userId: user.userId,
+          },
+          type: QueryTypes.SELECT,
+        }
+      );
       res.render("client/pages/order/index", {
         title: "Danh sách đơn hàng",
         orders: orders,

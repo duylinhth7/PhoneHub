@@ -3,34 +3,90 @@ extends ../../layouts/default.pug
 block main
   .container.mt-5
     .row.justify-content-center
-      .col-md-6
+      .col-md-6.col-lg-5
         .card.shadow-lg.rounded-4.border-0
           .card-body.p-4
-            h2.text-center.mb-4.text-primary Đăng ký tài khoản 
+            h2.text-center.mb-4.text-back Đăng ký tài khoản 
 
-            form(action="/users/register" method="POST")
+            form(action="/users/register", method="POST")
+              // Họ và tên
               .mb-3
                 label.form-label(for="fullname") Họ và tên
-                input.form-control.rounded-pill(type="text", name="fullname", id="fullname", placeholder="Nhập họ tên")
+                .input-group
+                  span.input-group-text.bg-white.rounded-start-pill
+                    i.fas.fa-user
+                  input.form-control.border-start-0.rounded-end-pill(
+                    type="text", 
+                    name="fullname", 
+                    id="fullname", 
+                    placeholder="Nhập họ tên", 
+                    required
+                  )
 
+              // Email
               .mb-3
                 label.form-label(for="email") Email
-                input.form-control.rounded-pill(type="email", name="email", id="email", placeholder="Nhập email", required)
+                .input-group
+                  span.input-group-text.bg-white.rounded-start-pill
+                    i.fas.fa-envelope
+                  input.form-control.border-start-0.rounded-end-pill(
+                    type="email", 
+                    name="email", 
+                    id="email", 
+                    placeholder="Nhập email", 
+                    required
+                  )
 
+              // Số điện thoại
               .mb-3
                 label.form-label(for="phone") Số điện thoại
-                input.form-control.rounded-pill(type="text", name="phone", id="phone", placeholder="Nhập số điện thoại")
+                .input-group
+                  span.input-group-text.bg-white.rounded-start-pill
+                    i.fas.fa-phone
+                  input.form-control.border-start-0.rounded-end-pill(
+                    type="text", 
+                    name="phone", 
+                    id="phone", 
+                    placeholder="Nhập số điện thoại"
+                  )
 
+              // Mật khẩu
               .mb-3
                 label.form-label(for="password") Mật khẩu
-                input.form-control.rounded-pill(type="password", name="password", id="password", placeholder="Nhập mật khẩu", required)
+                .input-group
+                  span.input-group-text.bg-white.rounded-start-pill
+                    i.fas.fa-lock
+                  input.form-control.border-0.rounded-0(
+                    type="password", 
+                    name="password", 
+                    id="password", 
+                    placeholder="Nhập mật khẩu", 
+                    password
+                    required
+                  )
+                  span.input-group-text.bg-white.rounded-end-pill(view-password)
+                    i.fas.fa-eye-slash
 
+              // Nhập lại mật khẩu
               .mb-3
                 label.form-label(for="confirmPassword") Nhập lại mật khẩu
-                input.form-control.rounded-pill(type="password", name="confirmPassword", id="confirmPassword", placeholder="Nhập lại mật khẩu", required)
+                .input-group
+                  span.input-group-text.bg-white.rounded-start-pill
+                    i.fas.fa-lock
+                  input.form-control.border-0.rounded-0(
+                    type="password", 
+                    name="confirmPassword",
+                    id="confirmPassword", 
+                    placeholder="Nhập lại mật khẩu", 
+                    required
+                  )
 
-              button.btn.btn-primary.w-100.rounded-pill.mt-3(type="submit") Đăng ký
+              // Submit
+              button.btn.btn-dark.w-100.rounded-pill.mt-3(type="submit") Đăng ký
 
+              // Đã có tài khoản
               .text-center.mt-3
                 span.text-muted Đã có tài khoản? 
                 a(href="/users/login").text-decoration-none.ms-1 Đăng nhập
+  block script 
+  script(src="/js/user.js")

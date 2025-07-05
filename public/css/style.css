@@ -1,3 +1,6 @@
+body{
+  font-family: Montserrat, sans-serif !important;
+}
 /* Header */
 .header {
   border-bottom: 1px solid #ddd;
@@ -35,6 +38,8 @@
 
 .alert-flash {
   opacity: 1;
+  color: black;
+  font-weight: 400;
   transition: opacity 0.5s ease-in-out;
   margin-bottom: 10px;
 }

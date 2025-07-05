@@ -91,11 +91,14 @@ const drawCart = () => {
         })
             .then(res => res.json())
             .then(data => {
-                const total = data.listCart.reduce((sum, item) => {
-                    return sum + item.quantity * item.special_price;
-                }, 0);
-                const htmls = data.listCart.map((item, index) => (
-                    `<tr>
+                if (data.listCart.length > 0) {
+                    const cartEmpty = document.querySelector(".cart-empty");
+                    cartEmpty.classList.add("hidden")
+                    const total = data.listCart.reduce((sum, item) => {
+                        return sum + item.quantity * item.special_price;
+                    }, 0);
+                    const htmls = data.listCart.map((item, index) => (
+                        `<tr>
             <td>${index + 1}</td>
             <td>
               <img 
@@ -122,18 +125,24 @@ const drawCart = () => {
               <button class="btn btn-sm btn-danger" btn-delete="${item.id}">Xóa</button>
             </td>
           </tr>`
-                ));
-                const tbody = document.querySelector("tbody");
-                if (tbody) {
-                    tbody.innerHTML = htmls.join(" ")
+                    ));
+                    const tbody = document.querySelector("tbody");
+                    if (tbody) {
+                        tbody.innerHTML = htmls.join(" ")
+                    }
+                    const innerTotal = document.querySelector("[total-price]");
+                    innerTotal.innerHTML = total.toLocaleString("vi-VI")
+                    updateQuantity();
+                    deleteProduct();
+                    miniCart()
+                } else {
+                    const formInputInfo = document.querySelector('[form-input-info]');
+                    const priceTotal = document.querySelector("h5.total-price")
+                    priceTotal.classList.add("hidden")
+                    tableCart.classList.add("hidden")
+                    formInputInfo.classList.add("hidden")
                 }
-                const innerTotal = document.querySelector("[total-price]");
-                innerTotal.innerHTML = total.toLocaleString("vi-VI")
-                updateQuantity();
-                deleteProduct();
-                miniCart()
             });
-
     }
 }
 drawCart()

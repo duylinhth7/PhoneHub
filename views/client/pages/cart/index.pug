@@ -7,7 +7,7 @@ block main
   .container.my-4
     .row
       .col-12
-        h2.mb-4.text-primary
+        h2.mb-4.text-dark
           i.fas.fa-shopping-cart.me-2
           | Giỏ hàng của bạn
 
@@ -24,17 +24,21 @@ block main
                 th Hành động
             tbody
               // Nội dung sản phẩm sẽ được thêm bằng JS
+          div.cart-empty.text-center.text-muted.my-5
+            i.fas.fa-box-open.fa-3x.mb-3
+            h4 Chưa có sản phẩm nào trong giỏ hàng!
+            a.btn.btn-dark.mt-3(href="/") Tiếp tục mua sắm
 
-        h5.text-end.mt-3.mb-4
-          | Tổng đơn hàng: 
-          strong.text-danger
-            span(total-price) 0
-            | đ
+          h5.text-end.mt-3.mb-4.total-price
+            | Tổng đơn hàng: 
+            strong.text-danger
+              span(total-price) 0
+              | đ
 
     hr.my-4
 
     .row
-      .col-md-10.offset-md-1.col-lg-8.offset-lg-2
+      .col-md-10.offset-md-1.col-lg-8.offset-lg-2(form-input-info)
         h3.mb-3.text-secondary
           i.fas.fa-user.me-2
           | Thông tin khách hàng
@@ -57,6 +61,6 @@ block main
             textarea#address.form-control(name="address", rows="2", required, placeholder="Số nhà, đường, quận/huyện, tỉnh/thành phố")
 
           .form-group.mt-4
-            button.btn.btn-success.btn-lg.w-100(type="submit")
+            button.btn.btn-dark.btn-lg.w-100(type="submit")
               i.fas.fa-check-circle.me-2
               |  ĐẶT HÀNG

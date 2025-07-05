@@ -6,7 +6,7 @@ block main
       .col-md-6
         .card.shadow-lg.rounded-4.border-0
           .card-body.p-4
-            h2.text-center.mb-4.text-primary Xác minh OTP
+            h2.text-center.mb-4.text-dark Xác minh OTP
 
             form(action="/users/password/otp" method="POST")
               .mb-3
@@ -31,7 +31,7 @@ block main
                   required
                 )
 
-              button.btn.btn-success.w-100.rounded-pill.mt-3(type="submit") Xác minh mã OTP
+              button.btn.btn-dark.w-100.rounded-pill.mt-3(type="submit") Xác minh mã OTP
 
               .text-center.mt-3
                 a(href="/users/password/forget").text-decoration-none.text-muted Gửi lại mã OTP?

@@ -10,18 +10,20 @@ header.header
         .inner-menu
           ul
             li
-              a(href="/") Trang chủ
+              a(href="/" class="text-dark") Trang chủ
             li
-              a(href="/categories") Danh mục
+              a(href="/categories" class="text-dark") Danh mục
             li
-              a(href="/cart") Giỏ hàng (<span mini-cart>0</span>)
+              a(href="/cart" class="text-dark") Giỏ hàng (<span mini-cart>0</span>)
             li 
-              a(href="/order") Đơn hàng
+              a(href="/order" class="text-dark") Đơn hàng
+                if(user)
+                  span  (#{totalOrders})
             if(user)
               li 
-                a(href="/users/logout") Đăng xuất
+                a(href="/users/logout" class="text-dark") Đăng xuất
             else
               li 
-                a(href="/users/login") Đăng nhập
+                a(href="/users/login" class="text-dark") Đăng nhập
               li 
-                  a(href="/users/register") Đăng ký
+                  a(href="/users/register" class="text-dark") Đăng ký
