@@ -1,0 +1,33 @@
+extends ../../layouts/default.pug
+
+block css
+  style.
+    .success-icon {
+      font-size: 4rem;
+      animation: pop 0.4s ease;
+    }
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+block main
+  .container.my-5
+    .row.justify-content-center
+      .col-md-10.col-lg-8
+        .card.shadow-lg.border-0
+          .card-body.text-center.px-5.py-5
+            i.fas.fa-check-circle.text-success.success-icon.mb-3
+            h2.text-success.mb-3 Đặt hàng thành công!
+            p.text-muted.lead Cảm ơn bạn đã đặt tour với chúng tôi. Chúng tôi sẽ sớm liên hệ để xác nhận đơn hàng và thông tin giao hàng.
+
+            hr.my-4
+
+            .d-grid.gap-2.d-md-flex.justify-content-md-center
+              a.btn.btn-primary.btn-lg.me-md-2(href="/")
+                i.fas.fa-home.me-2
+                | Về trang chủ
+
+              a.btn.btn-outline-secondary.btn-lg(href="/order")
+                i.fas.fa-list-ul.me-2
+                | Xem đơn hàng của bạn

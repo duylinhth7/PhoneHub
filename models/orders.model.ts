@@ -17,8 +17,11 @@ const Order = sequelize.define("Order", {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
   },
-    fullname: {
+    fullName: {
     type: DataTypes.STRING(100)
+  },
+    phone: {
+    type: DataTypes.STRING(20)
   },
   address: {
     type: DataTypes.TEXT,

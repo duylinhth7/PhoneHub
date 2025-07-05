@@ -1,0 +1,64 @@
+extends ../../layouts/default
+
+block main
+  .container.mt-5
+    .row
+      .col-12
+        h2.mb-4.text-primary
+          i.fas.fa-receipt.me-2
+          | Chi tiết đơn hàng ##{order_info.id}
+
+        .card.mb-4.shadow-sm
+          .card-header.bg-light
+            strong Thông tin đơn hàng
+          .card-body
+            .row
+              .col-md-6
+                p.mb-2
+                  strong Ngày đặt: 
+                  | #{new Date(order_info.createdAt).toLocaleDateString('vi-VN')}
+                p.mb-2
+                  strong Tên người nhận: 
+                  | #{order_info.fullName}
+                p.mb-2
+                  strong Số điện thoại: 
+                  | #{order_info.phone}
+              .col-md-6
+                p.mb-2
+                  strong Địa chỉ: 
+                  | #{order_info.address}
+                p.mb-2
+                  strong Ghi chú: 
+                  | #{order_info.note || 'Không có'}
+                p.mb-2
+                    strong Trạng thái: 
+                        if order_info.status === "initial"
+                            span.badge.bg-warning.text-dark Đang chờ xử lý
+
+        h4.mb-3.text-secondary
+          i.fas.fa-boxes.me-2
+          |  Sản phẩm đã đặt
+
+        if order_items.length
+          table.table.table-hover.align-middle
+            thead.table-light
+              tr
+                th Hình ảnh
+                th Tên sản phẩm
+                th Số lượng
+                th Giá sau giảm
+            tbody
+              each item in order_items
+                tr
+                  td(style="width: 100px")
+                    img.img-thumbnail(src=item.image, alt=item.title, width="80")
+                  td #{item.title}
+                  td #{item.quantity}
+                  td #{(+item.special_price).toLocaleString('vi-VN')} ₫
+        else
+          .alert.alert-warning Không có sản phẩm nào trong đơn hàng này.
+
+        hr.mt-4
+        h5.text-end.text-dark
+          | Tổng thanh toán: 
+          strong.text-danger.ms-2 #{(+order_items.totalPrice).toLocaleString('vi-VN')} ₫

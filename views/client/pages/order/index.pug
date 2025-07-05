@@ -1,0 +1,51 @@
+extends ../../layouts/default
+
+block main
+  .container.mt-5
+    .row
+      .col-12
+        h2.mb-4.text-primary
+          i.fas.fa-list.me-2
+          | Danh sách đơn hàng
+
+        if orders.length
+          table.table.table-hover.align-middle.shadow-sm
+            thead.table-light
+              tr.text-center
+                th Mã đơn
+                th Ngày đặt
+                th Trạng thái
+                th Tổng tiền
+                th Hành động
+            tbody
+              each order in orders
+                tr.text-center
+                  td 
+                    span.badge.bg-secondary.text-light.fs-6 #{order.id}
+                  td 
+                    b #{new Date(order.createdAt).toLocaleDateString('vi-VN')}
+                  td
+                    if order.status === "initial"
+                      span.badge.bg-warning.text-dark Đang chờ xử lý
+                    else if order.status === "shipping"
+                      span.badge.bg-primary Đang giao hàng
+                    else if order.status === "completed"
+                      span.badge.bg-success Đã hoàn thành
+                    else if order.status === "canceled"
+                      span.badge.bg-danger Đã hủy
+                    else
+                      span.badge.bg-secondary #{order.status}
+                  td.text-end.text-danger 
+                    b #{(+order.totalPrice).toLocaleString('vi-VN')} ₫
+                  td
+                    a.btn.btn-sm.btn-outline-primary.me-1(href=`/order/detail/${order.id}`)
+                      i.fas.fa-eye.me-1
+                      | Chi tiết
+                    if order.status === "initial"
+                        form(action=`/order/cancel/${order.id}`, method="POST", style="display: inline")
+                            button.btn.btn-sm.btn-outline-danger(type="submit" onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')") Hủy
+
+        else
+          .alert.alert-info.mt-4.text-center
+            i.fas.fa-info-circle.me-2
+            | Bạn chưa có đơn hàng nào.

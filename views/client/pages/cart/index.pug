@@ -1,13 +1,19 @@
 extends ../../layouts/default.pug
+
 block css 
   link(rel="stylesheet", href="/css/cart.css")
+
 block main
-  .container.my-3
+  .container.my-4
     .row
       .col-12
+        h2.mb-4.text-primary
+          i.fas.fa-shopping-cart.me-2
+          | Giỏ hàng của bạn
+
         div.cartDetail__table
-          table(class="table table-bordered" table-cart)
-            thead
+          table.table.table-bordered.table-hover.align-middle.text-center(table-cart)
+            thead.table-light
               tr
                 th STT
                 th Ảnh
@@ -17,50 +23,40 @@ block main
                 th Tổng tiền
                 th Hành động
             tbody
-          
-          h5(class="text-right mb-4") Tổng đơn hàng: <span total-price>0</span>đ  
+              // Nội dung sản phẩm sẽ được thêm bằng JS
+
+        h5.text-end.mt-3.mb-4
+          | Tổng đơn hàng: 
+          strong.text-danger
+            span(total-price) 0
+            | đ
+
+    hr.my-4
 
     .row
-      .col-12
-        h3 Thông tin khách hàng
+      .col-md-10.offset-md-1.col-lg-8.offset-lg-2
+        h3.mb-3.text-secondary
+          i.fas.fa-user.me-2
+          | Thông tin khách hàng
 
-        form(form-order)
-          div(class="form-group")
-            label(for="fullName") Họ tên
-            input(
-              type="text"
-              class="form-control"
-              id="fullName"
-              name="fullName"
-              required
-            )
-          div(class="form-group")
-            label(for="phone") Số điện thoại
-            input(
-              type="text"
-              class="form-control"
-              id="phone"
-              name="phone"
-              required
-            )
-          div(class="form-group")
-            label(for="note") Ghi chú
-            textarea(
-              class="form-control"
-              id="note"
-              name="note"
-              rows="2"
-            )
-          div(class="form-group")
-            label(for="address") Địa chỉ nhận hàng
-            textarea(
-              class="form-control"
-              id="address"
-              name="address"
-              rows="2"
-            )
-          div(class="form-group")
-            button(
-              type="submit"
-              class="btn btn-success btn-block"
-            ) ĐẶT TOUR
+        form(form-order).p-4.shadow-sm.bg-light.rounded
+          .form-group.mb-3
+            label.form-label(for="fullName") Họ tên
+            input#fullName.form-control(type="text", name="fullName", required, placeholder="Nguyễn Văn A")
+
+          .form-group.mb-3
+            label.form-label(for="phone") Số điện thoại
+            input#phone.form-control(type="text", name="phone", required, placeholder="098xxxxxxx")
+
+          .form-group.mb-3
+            label.form-label(for="note") Ghi chú
+            textarea#note.form-control(name="note", rows="2", placeholder="Giao giờ hành chính, gọi trước khi giao...")
+
+          .form-group.mb-3
+            label.form-label(for="address") Địa chỉ nhận hàng
+            textarea#address.form-control(name="address", rows="2", required, placeholder="Số nhà, đường, quận/huyện, tỉnh/thành phố")
+
+          .form-group.mt-4
+            button.btn.btn-success.btn-lg.w-100(type="submit")
+              i.fas.fa-check-circle.me-2
+              |  ĐẶT HÀNG
