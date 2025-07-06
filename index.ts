@@ -5,8 +5,11 @@ import bodyParser from "body-parser"
 import mothodOverride from "method-override";
 import session from 'express-session';
 import flash from 'connect-flash';
+import path from "path";
 import cookieParser from "cookie-parser";
 import { routesClient } from "./routes/client/index.route";
+import { routesAdmin } from "./routes/admin/index.routes";
+import { systemConfig } from "./config/system";
 
 
 dotenv.config();
@@ -24,6 +27,9 @@ app.set('view engine', 'pug'); // template engine sử dụng: pug
 app.use(express.static(`${__dirname}/public`)); // Thiết lập thư mục chứa file tĩnh
 app.use(mothodOverride("_method"));
 app.use(flash());
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+
+app.locals.prefixAdmin = systemConfig.prefixAdmin
 
 //Session & Flash
 
@@ -43,9 +49,10 @@ app.use((req:Request, res:Response, next:NextFunction) => {
 
 //End Session & Flash
 
-//Router Client
+//Router Client & ADMIN
 routesClient(app);
-//End router client
+routesAdmin(app);
+//End router client & ADMIN
 
 
 app.listen(port, () => {

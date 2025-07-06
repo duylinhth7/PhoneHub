@@ -1,0 +1,65 @@
+body{
+  font-family: Montserrat, sans-serif !important;
+}
+/* HEADER CSS */
+.header {
+  border-bottom: 1px solid #eee;
+}
+
+.header .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+}
+
+.header .inner-logo a {
+  font-size: 20px;
+  color: #333;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* END HEADER CSS */
+/* Sider CSS */
+.sider ul li a{
+  color: #000;
+  text-decoration: none;
+  font-weight: 500;
+}
+/* END Sider CSS */
+
+/* CSS PHẦN MAIN */
+.layout{
+  display: flex;
+}
+.body .main {
+    margin-left: 20px;
+    padding: 15px;
+    flex: 1;
+}
+/* END CSS MAIN */
+
+/* Flash */
+.flash-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  min-width: 300px; /* đủ rộng để hiển thị nội dung */
+}
+
+.alert-flash {
+  opacity: 1;
+  color: black;
+  font-weight: 400;
+  transition: opacity 0.5s ease-in-out;
+  margin-bottom: 10px;
+}
+
+.alert-flash.hide {
+  opacity: 0;
+}
+/* End Flash */
+
+

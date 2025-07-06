@@ -1,0 +1,12 @@
+mixin panigation(panigation)
+    nav(class="pagination")
+        if(panigation.currentPage > 1)
+            li(class="page-item")
+                button(class="page-link" href="#" button-panigation=panigation.currentPage - 1) Trang trước
+        - for(let i=1; i<=panigation.totalPages; i++)
+            li(class=`page-item ${i==panigation.currentPage ? ("active") : ("")}`)
+                button(class="page-link" href="#" button-panigation=i ) #{i}
+
+        if(panigation.currentPage < panigation.totalPages)
+            li(class="page-item")
+                button(class="page-link" href="#" button-panigation=panigation.currentPage+1) Trang sau

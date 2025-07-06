@@ -1,0 +1,61 @@
+extends ../../layouts/default.pug
+
+block main
+  .container.mt-4
+    h2.mb-4 Thêm sản phẩm mới
+
+    form(method="POST", action=`${prefixAdmin}/products/create`, enctype="multipart/form-data")
+      .row
+        .col-md-6.mb-3
+          label.form-label(for="title") Tên sản phẩm
+          input.form-control(type="text", name="title", id="title", required)
+
+        .col-md-6.mb-3
+          label.form-label(for="price") Giá (VNĐ)
+          input.form-control(type="number", name="price", id="price", required)
+        .col-md-6.mb-3
+          label.form-label(for="category") Danh mục
+          select.form-select(name="categoryId", id="category", required)
+            option(value="") -- Chọn danh mục --
+            each category in categories
+              option(value=category.id)= category.title
+        .col-md-6.mb-3
+          label.form-label(for="discount") Giảm giá (%)
+          input.form-control(type="number", name="discount", id="discount", min="0", max="100")
+
+        .col-md-6.mb-3
+          label.form-label(for="stock") Số lượng
+          input.form-control(type="number", name="stock", id="stock", min="0")
+        .col-md-6.mb-3
+          label.form-label(for="featured") Sản phẩm nổi bật?
+          select.form-select(name="featured", id="featured", required)
+            option(value="false") -- Không --
+            option(value="true") -- Có -- 
+
+      .mb-3
+        label.form-label Ảnh sản phẩm
+
+        ul.nav.nav-tabs(role="tablist")
+          li.nav-item
+            button.nav-link.active(type="button", data-bs-toggle="tab", data-bs-target="#tabUpload") Upload từ máy
+          li.nav-item
+            button.nav-link(type="button", data-bs-toggle="tab", data-bs-target="#tabUrl") Nhập URL
+
+        .tab-content.border.rounded.p-3.mt-2
+          .tab-pane.fade.show.active#tabUpload
+            input.form-control(type="file", name="imagesFiles", accept="image/*", multiple, onchange="previewImages(event)")
+            .d-flex.flex-wrap.mt-2#uploadPreview
+
+          .tab-pane.fade#tabUrl
+            textarea.form-control(name="imageUrls", rows="6", placeholder="Mỗi dòng là 1 URL... \nVí dụ:\n[url 1, \n url 2, \n url 3,\n ... ]", oninput="previewImageUrls(this.value)")
+            .d-flex.flex-wrap.mt-2#urlPreview
+
+      .mb-3
+        label.form-label(for="description") Mô tả
+        textarea.form-control.tiny-mce(name="description", id="description", rows="5")
+
+      button.btn.btn-dark(type="submit")
+        i.fas.fa-plus.me-1
+        | Thêm sản phẩm
+
+      a.btn.btn-secondary.ms-2(href=`${prefixAdmin}/products`) Hủy

@@ -1,0 +1,17 @@
+header.header.bg-white.shadow-sm.py-2
+    .container-fluid
+        .row.align-items-center
+            .col-6
+                .inner-logo.d-flex.align-items-center.gap-2
+                    a(href="/admin/dashboard", class="text-dark fw-bold fs-5 text-decoration-none") 
+                        i.fas.fa-cogs.me-2
+                        | ADMIN
+            .col-6
+                .d-flex.justify-content-end.align-items-center.gap-2
+                    span.text-muted.me-2 Xin chào, Admin
+                    a(href=`${prefixAdmin}/my-account`, class="btn btn-outline-primary btn-sm")
+                        i.fas.fa-user.me-1
+                        | Tài khoản
+                    a(href=`${prefixAdmin}/auth/logout`, class="btn btn-outline-danger btn-sm")
+                        i.fas.fa-sign-out-alt.me-1
+                        | Đăng xuất
