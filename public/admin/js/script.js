@@ -112,7 +112,7 @@ if (formEdit) {
                 item.setAttribute("readonly", true)
                 item.setAttribute("disabled", true)
             });
-            bttonSubmitEdit.classList.add   ("d-none")
+            bttonSubmitEdit.classList.add("d-none")
             buttonEdit.setAttribute("valueCurrent", "readonly");
             buttonEdit.innerText = "Cập nhật";
         }

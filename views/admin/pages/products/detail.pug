@@ -8,7 +8,7 @@ block main
         i.fas.fa-sync-alt.me-1
         | Cập nhật
 
-    form(method="POST", action=`${prefixAdmin}/products/edit`, enctype="multipart/form-data" form-edit)
+    form(method="POST", action=`${prefixAdmin}/products/edit/${product.id}`, enctype="multipart/form-data" form-edit)
       .row
         .col-md-6.mb-3
           label.form-label(for="title") Tên sản phẩm
@@ -65,7 +65,7 @@ block main
         label.form-label(for="description") Mô tả
         textarea.form-control.tiny-mce(name="description", id="description", rows="5")= product.description || ''
 
-      button.btn.btn-dark#btn-submit-edit(type="submit")
+      button.btn.d-none.btn-dark#btn-submit-edit(type="submit")
         i.fas.fa-plus.me-1
         | Cập nhật sản phẩm
 

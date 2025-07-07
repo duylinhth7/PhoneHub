@@ -1,0 +1,29 @@
+extends ../../layouts/default.pug
+
+block main
+  .container.mt-4
+    h2 Thêm danh mục mới
+
+    form(method="POST", action=`${prefixAdmin}/categories/create`, enctype="multipart/form-data")
+      .mb-3
+        label.form-label(for="title") Tên danh mục
+        input.form-control(type="text", name="title", id="title", required)
+
+      //- ẢNH: chọn 1 trong 2 cách
+      .mb-3
+        label.form-label Ảnh đại diện
+
+        //- Option 1: Dán link ảnh
+        input.form-control.mb-2(type="text", name="imageUrl", placeholder="Dán link ảnh (nếu có)")
+
+        //- Option 2: Upload ảnh file
+        input.form-control(type="file", name="imageFile")
+
+        small.text-muted Chỉ cần dùng 1 trong 2 cách: dán link hoặc upload file
+
+      .mb-3
+        label.form-label(for="description") Mô tả (nếu có)
+        textarea.form-control(name="description", id="description", rows="3")
+
+      button.btn.btn-primary(type="submit") Thêm danh mục
+      a.btn.btn-secondary.ms-2(href=`${prefixAdmin}/categories`) Quay lại

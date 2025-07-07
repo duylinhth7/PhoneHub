@@ -3,7 +3,7 @@ import { systemConfig } from "../../config/system";
 
 
 const PATH_ADMIN = systemConfig.prefixAdmin;
-export const createValidate = (req:Request, res:Response, next:NextFunction) => {
+export const productValidate = (req:Request, res:Response, next:NextFunction) => {
     const {title, price, discount, stock, imagesFiles, imageUrls, description, categoryId} = req.body;
     if(!title || !price || !discount || !stock || !categoryId){
         req.flash("error", "Vui lòng nhập đầy đủ thông tin!");

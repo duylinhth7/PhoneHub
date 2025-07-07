@@ -42,8 +42,10 @@ block main
                 td.text-center
                   a.btn.btn-sm.btn-warning.me-1(href=`${prefixAdmin}/products/detail/${product.id}`)
                     i.fas.fa-edit
-                  a.btn.btn-sm.btn-danger(href=`${prefixAdmin}/products/delete/${product.id}`, onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?');")
-                    i.fas.fa-trash
+                  form(method="POST", action=`${prefixAdmin}/products/delete/${product.id}?_method=DELETE`, class="d-inline")
+                    button.btn.btn-sm.btn-danger(type="submit" onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?');")
+                      i.fas.fa-trash
+
     else
       .alert.alert-info Không có sản phẩm nào.
     +panigation(objectPanigation)

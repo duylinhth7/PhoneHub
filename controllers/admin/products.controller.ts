@@ -6,15 +6,16 @@ import slugify from "slugify";
 import { systemConfig } from "../../config/system";
 import panigationHelper from "../../helpers/panigation";
 import Categories from "../../models/categories.model";
-import { raw } from "mysql2";
 
 const PATH_ADMIN = systemConfig.prefixAdmin;
 // [GET] /admin/products
 export const index = async (req: Request, res: Response) => {
   try {
-    let where = {};
+    let where = {deleted: false};
     //Phân trang BACKEND
-    const countProduct = await Product.count({});
+    const countProduct = await Product.count({
+      where: {deleted: false}
+    });
     const objectPanigation = panigationHelper(
       {
         currentPage: 1,
@@ -29,7 +30,7 @@ export const index = async (req: Request, res: Response) => {
     if (req.query.search) {
       const title = req.query.search;
       where["title"] = {
-        [Op.regexp]: title
+        [Op.regexp]: title,
       };
     }
     //End phần tìm kiếm
@@ -116,24 +117,82 @@ export const createPost = async (req: Request, res: Response) => {
 };
 
 //[GET] /admin/products/detail/:id
-export const detail = async (req:Request, res:Response) => {
+export const detail = async (req: Request, res: Response) => {
   try {
-    const id:string = req.params.id;
+    const id: string = req.params.id;
     const product = await Product.findOne({
-      where: {id: id},
-      raw: true
+      where: { id: id },
+      raw: true,
     });
     const categories = await Categories.findAll({
       where: {},
-      raw: true
+      raw: true,
     });
-    product['images'] = JSON.parse(product["images"]);
+    product["images"] = JSON.parse(product["images"]);
     res.render("admin/pages/products/detail", {
       title: "Chi tiết sản phẩm",
       product: product,
-      categories:  categories
-    })
+      categories: categories,
+    });
   } catch (error) {
-    console.log("Lỗi: ", error)
+    console.log("Lỗi: ", error);
+  }
+};
+
+//[POST] /admin/products/edit/:id
+export const edit = async (req: Request, res: Response) => {
+  try {
+    const id: string = req.params.id;
+    const {
+      title,
+      price,
+      discount,
+      stock,
+      imagesFiles,
+      imageUrls,
+      description,
+      featured,
+      categoryId,
+    } = req.body;
+    const images = imageUrls
+      .split("\r\n")
+      .map((url) => url.trim())
+      .filter(Boolean);
+    if (imagesFiles) {
+      for (const item of imagesFiles) {
+        images.push(item);
+      }
+    }
+    const editProduct = {
+      title,
+      price: parseInt(price),
+      discount: parseInt(discount),
+      stock: parseInt(stock),
+      images: JSON.stringify(images),
+      description,
+      categoryId,
+      featured: featured === "true",
+    };
+    await Product.update(editProduct, {
+      where: { id: id },
+    });
+    req.flash("success", "Cập nhật thành công!");
+    res.redirect(PATH_ADMIN + `/products/detail/${id}`);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//[DELETE] /admin/products/delete/:id;
+export const deleteProduct = async (req:Request, res:Response) => {
+  try {
+    const id:string = req.params.id;
+    await Product.update({deleted: true}, {
+      where: {id: id}
+    });
+    req.flash("success", "Xóa mềm sản phẩm thành công!");
+    return res.redirect(PATH_ADMIN + "/products");
+  } catch (error) {
+    console.log("Lỗi: ", error);
   }
 }

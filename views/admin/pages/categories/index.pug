@@ -1,0 +1,40 @@
+extends ../../layouts/default.pug
+include ../../mixins/panigation.pug
+
+block main
+  .container.mt-4
+    h2 Quản lý danh mục sản phẩm
+
+    a.btn.btn-dark.mb-3(href=`${prefixAdmin}/categories/create`) Thêm danh mục mới
+
+    table.table.table-bordered.table-hover
+      thead
+        tr
+          th ID
+          th Tên danh mục
+          th Ảnh
+          th Vị trí
+          th Slug
+          th Thời gian tạo
+          th Thao tác
+      tbody
+        each category in categories
+          tr
+            td.text-center #{category.id}
+            td #{category.title}
+            td.text-center
+              if category.image
+                img(src=category.image, alt=category.title, width="50", height="50")
+              else
+                span.text-muted Không có ảnh
+            td.text-center #{category.position}
+            td #{category.slug}
+            td.text-muted #{new Date(category.createdAt).toLocaleString('vi-VN')}
+            td.text-center
+              a.btn.btn-sm.btn-warning.me-1(href=`${prefixAdmin}/categories/detail/${category.id}`)
+                i.fas.fa-edit
+              form(method="POST", action=`${prefixAdmin}/categories/delete/${category.id}?_method=DELETE`, class="d-inline")
+                button.btn.btn-sm.btn-danger(type="submit" onclick="return confirm('Bạn có chắc muốn xóa danh mục này?');")
+                  i.fas.fa-trash
+
+    +panigation(objectPanigation)
