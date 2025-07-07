@@ -1,29 +1,33 @@
-header.header
+header.header.bg-light.shadow-sm.py-3
   .container
-    .row.align-items-center
-      .col-3
-        .inner-logo
-          a(href="/")
-            h2 Logo
+    .d-flex.justify-content-between.align-items-center
+      // Logo
+      a(href="/" class="text-decoration-none")
+        h2.text-primary.mb-0 Logo
+      
+      // Menu
+      nav
+        ul.nav
+          li.nav-item
+            a.nav-link.text-dark(href="/") Trang chủ
+          li.nav-item
+            a.nav-link.text-dark(href="/categories") Danh mục
+          li.nav-item
+            a.nav-link.text-dark(href="/cart")
+              | Giỏ hàng (
+              span(mini-cart) 0
+              | )
+          li.nav-item
+            a.nav-link.text-dark(href="/order")
+              | Đơn hàng
+              if user
+                span.text-danger &nbsp;(#{totalOrders})
 
-      .col-9
-        .inner-menu
-          ul
-            li
-              a(href="/" class="text-dark") Trang chủ
-            li
-              a(href="/categories" class="text-dark") Danh mục
-            li
-              a(href="/cart" class="text-dark") Giỏ hàng (<span mini-cart>0</span>)
-            li 
-              a(href="/order" class="text-dark") Đơn hàng
-                if(user)
-                  span  (#{totalOrders})
-            if(user)
-              li 
-                a(href="/users/logout" class="text-dark") Đăng xuất
-            else
-              li 
-                a(href="/users/login" class="text-dark") Đăng nhập
-              li 
-                  a(href="/users/register" class="text-dark") Đăng ký
+          if user
+            li.nav-item
+              a.nav-link.text-danger(href="/users/logout") Đăng xuất
+          else
+            li.nav-item
+              a.nav-link.text-dark(href="/users/login") Đăng nhập
+            li.nav-item
+              a.nav-link.text-dark(href="/users/register") Đăng ký

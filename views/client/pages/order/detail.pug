@@ -34,6 +34,10 @@ block main
                     strong Trạng thái: 
                         if order_info.status === "initial"
                             span.badge.bg-warning.text-dark Đang chờ xử lý
+                        if order_info.status === "confirmed"
+                            span.badge.bg-success.text-dark Người bán đã xác nhận
+                        if order_info.status === "reject"
+                            span.badge.bg-danger.text-dark Đã bị xóa bởi người bán
 
         h4.mb-3.text-secondary
           i.fas.fa-boxes.me-2

@@ -6,6 +6,7 @@ import { cleanExpiredOtp } from "../../middleware/client/cleanExpiredOtp.middlew
 import { productsRoute } from "./products.route";
 import { cartRoute } from "./cart.route";
 import { orderRoute } from "./order.route";
+import { categoriesRoute } from "./categories.routes";
 
 export const routesClient = (app: Express) => {
     app.use(authentication);
@@ -15,4 +16,5 @@ export const routesClient = (app: Express) => {
     app.use("/products", productsRoute)
     app.use("/cart", cartRoute);
     app.use("/order", orderRoute);
+    app.use("/categories", categoriesRoute)
 }

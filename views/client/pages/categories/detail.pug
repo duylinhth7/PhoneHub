@@ -1,0 +1,43 @@
+extends ../../layouts/default.pug
+include ../../mixins/panigation.pug
+
+block css
+  link(rel="stylesheet", href="/css/product.css")
+
+block main
+  .container.mt-5
+    // Tiêu đề và bộ lọc sắp xếp
+    .d-flex.flex-wrap.justify-content-between.align-items-center.mb-4
+      .mb-3.mb-md-0
+        h2.text-primary.fw-bold.mb-1
+          i.fas.fa-tags.me-2 
+          | #{category.title.toUpperCase()}
+        small.text-muted.fs-6 Hiển thị tất cả sản phẩm thuộc danh mục này
+
+      // Phần sort dạng button group
+      .btn-group(role="group" aria-label="Sort options")
+        - const baseUrl = `/categories/detail/${category.slug}`
+        a.btn.btn-sm(class=typeSort === 'createdAt' ? 'btn-danger' : 'btn-outline-danger', href=`${baseUrl}?sort=createdAt`) Mặc định
+        a.btn.btn-sm(class=sort === 'asc' ? 'btn-danger' : 'btn-outline-danger', href=`${baseUrl}?sort=asc`) Giá tăng dần
+        a.btn.btn-sm(class=sort === 'desc' ? 'btn-danger' : 'btn-outline-danger', href=`${baseUrl}?sort=desc`) Giá giảm dần
+
+    // Danh sách sản phẩm
+    if products.length > 0
+      .row
+        each product in products
+          .col-md-3.col-sm-6.mb-4
+            a.product-card(href=`/products/${product.slug}`)
+              .image
+                img(src=product.image, alt=product.title)
+                if product.discount
+                  span.discount Giảm #{product.discount}%
+              .title
+                h3 #{product.title}
+              .price
+                h3.special_price #{(+product.special_price).toLocaleString('vi-VN')} ₫
+                if product.discount
+                  h3.old_price #{product.price.toLocaleString('vi-VN')} ₫
+    else
+      .alert.alert-warning Không có sản phẩm nào trong danh mục này.
+
+    +panigation(objectPanigation)

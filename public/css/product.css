@@ -75,3 +75,23 @@
   color: gray;
   text-decoration: line-through;
 }
+
+.bg-orange{
+  background-color:	#FFB74D;
+}
+
+/* SECTION IPHONE */
+.bg-light-orange {
+  background-color: #fff4e5; /* Màu cam sữa nhẹ */
+}
+
+.section-header h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.section-header p {
+  font-size: 1rem;
+  color: #666;
+}
+/* END SECTION IPHONE */

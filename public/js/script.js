@@ -222,3 +222,26 @@ if (formOrder) {
     })
 }
 //End đặt sản phẩm
+
+//PHẦN SLICK SLIDER
+$('.product-slider').slick({
+  slidesToShow: 4,
+  slidesToScroll: 1,
+  autoplay: true,
+  autoplaySpeed: 900,
+});
+// END PHẦN SLICK SLIDER
+
+//PANIGATION - PHÂN TRANG
+const buttonPanigation = document.querySelectorAll("[button-panigation]");
+if (buttonPanigation) {
+    buttonPanigation.forEach(button => {
+        button.addEventListener("click", () => {
+            const page = button.getAttribute("button-panigation");
+            const url = new URL(window.location.href);
+            url.searchParams.set("page", page);
+            window.location.href = url.href;
+        })
+    })
+}
+//END PANIGATION - PHÂN TRANG

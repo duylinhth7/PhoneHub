@@ -1,0 +1,25 @@
+extends ../../layouts/default.pug
+
+block css
+  style.
+    .category-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .category-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+block main
+  .container.mt-5
+    .text-center.mb-5
+      h2.text-primary.fw-bold Danh mục sản phẩm
+      p.text-muted Khám phá các thương hiệu nổi bật
+
+    .row
+      each category in categories
+        .col-md-3.col-sm-6.mb-4
+          a(href=`/categories/detail/${category.slug}`, class="text-decoration-none")
+            .card.text-center.p-3.border-0.shadow-sm.category-card
+              img(src=category.image, alt=category.title, class="img-fluid mb-3", style="height: 100px; object-fit: contain")
+              h5.text-dark.text-uppercase= category.title

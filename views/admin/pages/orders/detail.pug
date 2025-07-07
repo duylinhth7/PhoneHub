@@ -1,0 +1,62 @@
+extends ../../layouts/default.pug
+
+block main
+  .container.mt-4
+    h2.mb-4 Chi tiết đơn hàng ##{order.id}
+
+    .row.mb-3
+      .col-md-6
+        p
+          strong Tên người nhận: 
+          | #{order.fullName}
+        p
+          strong Số điện thoại: 
+          | #{order.phone}
+        p
+          strong Địa chỉ giao hàng: 
+          | #{order.address}
+        p
+          strong Ghi chú: 
+          | #{order.note || 'Không có'}
+      .col-md-6
+        p
+          strong Trạng thái: 
+          span.badge(
+            class=order.status === 'confirmed' ? 'bg-success' : 'bg-secondary'
+          ) #{order.status === 'confirmed' ? 'Đã xác nhận' : 'Chưa xác nhận'}
+        p
+          strong Ngày đặt: 
+          | #{new Date(order.createdAt).toLocaleString('vi-VN')}
+        p
+          strong Ngày cập nhật: 
+          | #{new Date(order.updatedAt).toLocaleString('vi-VN')}
+
+    hr
+
+    h4.mb-3 Danh sách sản phẩm
+    if order_items.length
+      table.table.table-bordered.table-hover
+        thead.table-light
+          tr
+            th Hình ảnh
+            th Tên sản phẩm
+            th Số lượng
+            th Đơn giá
+            th Tổng giá
+        tbody
+          each item in order_items
+            tr
+              td
+                img(src=item.image, alt="Ảnh sản phẩm", style="width: 80px; height: 80px; object-fit: cover; border-radius: 6px")
+              td #{item.title}
+              td #{item.quantity}
+              td #{item.special_price.toLocaleString()} đ
+              td #{(item.special_price * item.quantity).toLocaleString()} đ
+      .text-end.mt-3
+        h5
+          strong Tổng đơn hàng: 
+          | #{order_items.totalPrice.toLocaleString()} đ
+    else
+      .alert.alert-info Không có sản phẩm nào trong đơn hàng.
+
+    a.btn.btn-secondary.mt-3(href=`${prefixAdmin}/orders`) ← Quay lại danh sách đơn hàng

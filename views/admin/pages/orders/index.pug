@@ -1,0 +1,52 @@
+extends ../../layouts/default.pug
+include ../../mixins/panigation.pug
+
+block main
+  .container-fluid.mt-4
+    .d-flex.justify-content-between.align-items-center.mb-3
+      h2.mb-0 Danh sách đơn hàng
+
+      form(method="GET", action=`${prefixAdmin}/orders`, class="d-flex align-items-center")
+        select.form-select(name="status", onchange="this.form.submit()")
+          option(value="") -- Tất cả trạng thái --
+          option(value="initial", selected=statusFilter === 'initial') Đang chờ xác nhận
+          option(value="confirmed", selected=statusFilter === 'confirmed') Đã xác nhận
+
+    if orders.length > 0
+      .table-responsive
+        table.table.table-bordered.table-hover.align-middle
+          thead.table-light
+            tr
+              th ID
+              th Họ tên
+              th Số điện thoại
+              th Địa chỉ nhận hàng
+              th Ghi chú
+              th Trạng thái
+              th Ngày tạo
+              th.text-center Hành động
+          tbody
+            each order, index in orders
+              tr
+                td #{order.userId}
+                td #{order.fullName || 'Chưa cập nhật'}
+                td #{order.phone}
+                td #{order.address}
+                td #{order.note}
+                td
+                  if order.status === "initial"
+                    button.badge.bg-secondary(value=order.status button-order id=order.id) Đang chờ xác nhận
+                  if order.status === "confirmed"
+                    button.badge.bg-success(value=order.status button-order id=order.id) Đã xác nhận
+                td #{new Date(order.createdAt).toLocaleString('vi-VN')}
+                td.text-center
+                  a.btn.btn-sm.btn-warning.me-1(href=`${prefixAdmin}/orders/detail/${order.id}`)
+                    i.fas.fa-eye
+                  form(action=`${prefixAdmin}/orders/delete/${order.id}?_method=DELETE`, method="POST", style="display: inline")
+                    button.btn.btn-sm.btn-outline-danger(type="submit" onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')") Xóa
+    else    
+      .alert.alert-info Không có đơn hàng nào.
+    +panigation(objectPanigation)
+
+block script 
+  script(src="/admin/js/orders.js")

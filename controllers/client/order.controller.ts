@@ -127,7 +127,6 @@ export const detail = async (req: Request, res: Response) => {
     const order_info = await Order.findOne({
       where: {
         id: id,
-        deleted: false,
       },
       raw: true,
     });

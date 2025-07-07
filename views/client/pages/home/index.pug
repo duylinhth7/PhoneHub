@@ -1,9 +1,28 @@
 extends ../../layouts/default.pug
-include ../../mixins/productCart.pug
+include ../../mixins/productFeatured.pug
+include ../../mixins/productCard.pug
+
 block css 
   link(rel="stylesheet", href="/css/product.css")
+
 block main
+  //- SECTION FEATURED 
   .container.mt-5
-    //- Sản phẩm nội bật
-    h2.text-primary.text-center.mb-4 Sản phẩm nổi bật
-    +productCard(products)
+    .section-header.text-center.mb-5
+      h2.text-primary.fw-bold.fs-2.mb-2 Sản phẩm nổi bật
+      p.text-muted Khám phá những sản phẩm được yêu thích nhất của chúng tôi
+
+    .bg-orange.p-4.rounded.shadow-sm
+      +productFeatured(products)
+    
+  //- SECTION IPHONE
+  .container.mt-5
+    .section-header.text-center.mb-5
+      h2.text-dark.fw-bold.fs-2.mb-2 🔥 Khám phá iPhone hot nhất hôm nay!
+      p.text-muted.fs-6 Cập nhật nhanh các phiên bản iPhone bán chạy với ưu đãi hấp dẫn
+
+    .bg-light-orange.p-4.rounded-4.shadow-sm.position-relative
+      +productCard(productsIphone)
+      .text-right.mb-3
+        a.btn.btn-dark.btn-sm(href="/categories/detail/apple") Xem tất cả →
+
