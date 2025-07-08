@@ -1,0 +1,58 @@
+extends ../../layouts/default.pug
+
+block main
+  .container
+    h1 Nhóm quyền hệ thống - PhoneHub
+    p Đây là danh sách các vai trò chính và quyền hạn tương ứng trong hệ thống.
+
+    table.table.table-bordered.table-striped
+      thead
+        tr
+          th Mã quyền
+          th Vai trò
+          th Mô tả
+          th Quyền hạn
+      tbody
+        tr
+          td admin
+          td Admin
+          td Quản trị hệ thống, toàn quyền
+          td
+            ul
+              li Quản lý người dùng
+              li Quản lý sản phẩm, danh mục
+              li Quản lý đơn hàng
+              li Phân quyền & thống kê
+
+        tr
+          td seller
+          td Seller
+          td Người bán hàng / showroom
+          td
+            ul
+              li Thêm, sửa, xoá sản phẩm của mình
+              li Quản lý kho, tồn hàng
+              li Xem đơn hàng liên quan
+
+        tr
+          td order-staff
+          td Order Staff
+          td Nhân viên xử lý đơn
+          td
+            ul
+              li Xem danh sách đơn hàng
+              li Cập nhật trạng thái đơn
+              li Liên hệ giao hàng
+
+        tr
+          td user
+          td User
+          td Khách hàng thông thường
+          td
+            ul
+              li Xem và tìm kiếm sản phẩm
+              li Thêm giỏ hàng & đặt hàng
+              li Theo dõi đơn hàng
+              li Đánh giá sản phẩm
+
+    hr

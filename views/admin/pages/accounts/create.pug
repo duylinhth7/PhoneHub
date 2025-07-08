@@ -1,0 +1,37 @@
+extends ../../layouts/default.pug
+
+block main
+  .container.mt-4
+    h3.mb-4 Thêm tài khoản mới
+
+    form(method="POST", action=`${prefixAdmin}/accounts/create`)
+      .mb-3
+        label.form-label(for="fullname") Họ tên
+        input.form-control(type="text", name="fullname", id="fullname", required, placeholder="Nhập họ tên")
+
+      .mb-3
+        label.form-label(for="email") Email
+        input.form-control(type="email", name="email", id="email", required, placeholder="Nhập email")
+
+      .mb-3
+        label.form-label(for="phone") Số điện thoại
+        input.form-control(type="text", name="phone", id="phone", required, placeholder="Nhập số điện thoại")
+
+      .mb-3
+        label.form-label(for="password") Mật khẩu
+        input.form-control(type="password", name="password", id="password", required, placeholder="Nhập mật khẩu")
+
+      .mb-3
+        label.form-label(for="role") Vai trò
+        select.form-select(name="role", id="role", required)
+          option(value="user") Người dùng
+          option(value="admin") Quản trị viên
+
+      .mb-3
+        label.form-label(for="status") Trạng thái
+        select.form-select(name="status", id="status")
+          option(value="active", selected) Kích hoạt
+          option(value="inactive") Chưa kích hoạt
+
+      button.btn.btn-dark(type="submit") Thêm tài khoản
+      a.btn.btn-secondary.ms-2(href=`${prefixAdmin}/accounts`) Quay lại

@@ -14,7 +14,8 @@ html
   body    
     .body 
       //- if(role.permissions.length > 0)
-      include ../partials/header.pug
+      if !noHeader
+        include ../partials/header.pug
       .flash-container
         if error_msg.length
           each err in error_msg
@@ -28,7 +29,8 @@ html
               | #{msg}
               span.ml-3(style="cursor:pointer; font-weight:bold;" onclick="this.parentElement.remove()") &times;
       .layout
-        include ../partials/sider.pug 
+        if !noPartial
+          include ../partials/sider.pug 
         .main
             block main
       //- else 

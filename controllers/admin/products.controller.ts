@@ -6,15 +6,33 @@ import slugify from "slugify";
 import { systemConfig } from "../../config/system";
 import panigationHelper from "../../helpers/panigation";
 import Categories from "../../models/categories.model";
+import { features } from "process";
 
 const PATH_ADMIN = systemConfig.prefixAdmin;
 // [GET] /admin/products
 export const index = async (req: Request, res: Response) => {
   try {
-    let where = {deleted: false};
+    let where = { deleted: false };
+
+    //Phần tìm  kiếm
+    if (req.query.search) {
+      const title = req.query.search;
+      where["title"] = {
+        [Op.regexp]: title,
+      };
+    }
+    //End phần tìm kiếm
+
+    //Phần lọc Featured
+    let featured: string;
+    if (req.query.featured) {
+      featured = req.query.featured;
+      where["featured"] = featured;
+    }
+    //End phần lọc Featured
     //Phân trang BACKEND
     const countProduct = await Product.count({
-      where: {deleted: false}
+      where: where,
     });
     const objectPanigation = panigationHelper(
       {
@@ -25,22 +43,14 @@ export const index = async (req: Request, res: Response) => {
       countProduct
     );
     //END phân trang BE;
-
-    //Phần tìm  kiếm
-    if (req.query.search) {
-      const title = req.query.search;
-      where["title"] = {
-        [Op.regexp]: title,
-      };
-    }
-    //End phần tìm kiếm
-    const products = await Product.findAll({
+    var products = await Product.findAll({
       where: where,
       order: [["createdAt", "DESC"]],
       limit: objectPanigation.limitItems,
       offset: objectPanigation.skipItems || 0,
       raw: true,
     });
+
     for (const item of products) {
       item["image"] = JSON.parse(item["images"])[0];
     }
@@ -48,6 +58,7 @@ export const index = async (req: Request, res: Response) => {
       title: "Danh sách sản phẩm",
       products: products,
       objectPanigation: objectPanigation,
+      featuredFilter: featured,
     });
   } catch (error) {
     console.log("Lỗi: ", error);
@@ -79,18 +90,18 @@ export const createPost = async (req: Request, res: Response) => {
       featured,
       categoryId,
       tskt_name,
-      tskt_value
+      tskt_value,
     } = req.body;
     //Xử lý logic tskt
     let tskt = [];
-    if(tskt_name.length > 0 && tskt_value.length > 0){
+    if (tskt_name.length > 0 && tskt_value.length > 0) {
       tskt_name.map((_, index) => {
         const newTskt = {
           name: tskt_name[index],
-          value: tskt_value[index]
+          value: tskt_value[index],
         };
-        tskt.push(newTskt)
-      })
+        tskt.push(newTskt);
+      });
     }
     //End xử lý logic tskt
     const position = await Product.count();
@@ -111,7 +122,7 @@ export const createPost = async (req: Request, res: Response) => {
       featured: featured === "true",
       slug,
       position: position + 1,
-      tskt: JSON.stringify(tskt)
+      tskt: JSON.stringify(tskt),
     };
 
     //Kiểm tra xem trong DB có sp nào trùng tên không?
@@ -144,7 +155,7 @@ export const detail = async (req: Request, res: Response) => {
       raw: true,
     });
     product["images"] = JSON.parse(product["images"]);
-    product["tskt"] = JSON.parse(product["tskt"])
+    product["tskt"] = JSON.parse(product["tskt"]);
     res.render("admin/pages/products/detail", {
       title: "Chi tiết sản phẩm",
       product: product,
@@ -173,16 +184,16 @@ export const edit = async (req: Request, res: Response) => {
       categoryId,
     } = req.body;
 
-        //Xử lý logic tskt
+    //Xử lý logic tskt
     let tskt = [];
-    if(tskt_name.length > 0 && tskt_value.length > 0){
+    if (tskt_name.length > 0 && tskt_value.length > 0) {
       tskt_name.map((_, index) => {
         const newTskt = {
           name: tskt_name[index],
-          value: tskt_value[index]
+          value: tskt_value[index],
         };
-        tskt.push(newTskt)
-      })
+        tskt.push(newTskt);
+      });
     }
     //End xử lý logic tskt
 
@@ -217,15 +228,18 @@ export const edit = async (req: Request, res: Response) => {
 };
 
 //[DELETE] /admin/products/delete/:id;
-export const deleteProduct = async (req:Request, res:Response) => {
+export const deleteProduct = async (req: Request, res: Response) => {
   try {
-    const id:string = req.params.id;
-    await Product.update({deleted: true}, {
-      where: {id: id}
-    });
+    const id: string = req.params.id;
+    await Product.update(
+      { deleted: true },
+      {
+        where: { id: id },
+      }
+    );
     req.flash("success", "Xóa mềm sản phẩm thành công!");
     return res.redirect(PATH_ADMIN + "/products");
   } catch (error) {
     console.log("Lỗi: ", error);
   }
-}
+};

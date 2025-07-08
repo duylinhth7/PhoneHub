@@ -63,7 +63,9 @@ export const registerPost = async (req: Request, res: Response) => {
     req.flash("success", "Tạo tài khoản thành công!");
     res.cookie("token", token);
     res.redirect("/");
-  } catch (error) {}
+  } catch (error) {
+    console.log("Lỗi: ", error)
+  }
 };
 
 //[GET] /users/logout

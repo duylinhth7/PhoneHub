@@ -1,0 +1,52 @@
+extends ../../layouts/default.pug
+
+block main
+  .container.mt-5
+    .row.justify-content-center
+      .col-md-6.col-lg-5
+        .card.shadow.rounded-4.border-0
+          .card-body.p-4
+            h4.text-center.mb-3.text-dark Đăng nhập quản trị viên
+
+            p.text-center.mt-3 Nhập thông tin đăng nhập để truy cập khu vực quản trị.
+
+            form(action="/admin/auth/login", method="POST")
+              // Email
+              .mb-3
+                label.form-label.text-danger(for="email") * Email quản trị
+                .input-group
+                  span.input-group-text.bg-white.rounded-start-pill
+                    i.fas.fa-user-shield
+                  input.form-control.border-start-0.rounded-end-pill(
+                    type="text", 
+                    id="email", 
+                    name="email", 
+                    placeholder="Nhập email admin", 
+                    required)
+
+              // Mật khẩu
+              .mb-3
+                label.form-label.text-danger(for="password") * Mật khẩu
+                .input-group
+                  span.input-group-text.bg-white.rounded-start-pill
+                    i.fas.fa-lock
+                  input.form-control.border-start-0.rounded-end-pill(
+                    type="password", 
+                    id="password", 
+                    name="password", 
+                    placeholder="Nhập mật khẩu", 
+                    password
+                    required)
+                  span.input-group-text.bg-white.rounded-end-pill(view-password)
+                    i.fas.fa-eye-slash
+
+              // Links phụ
+              .d-flex.justify-content-end.mt-2.mb-3
+                a(href="/admin/password/forget") Quên mật khẩu?
+
+              // Button
+              button.btn.btn-dark.w-100.rounded-pill(type="submit") Đăng nhập
+
+block script 
+  script(src="/js/user.js")
+  //Dùng nhờ của user tí nhé :)))

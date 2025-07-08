@@ -11,11 +11,18 @@ const PATH_ADMIN = systemConfig.prefixAdmin;
 export const index = async (req: Request, res: Request) => {
   try {
     let where = {
-        deleted: false
+      deleted: false,
     };
+
+    //Lọc theo status
+    let statusFilter = "";
+    if (req.query.status) {
+      (where["status"] = req.query.status), (statusFilter = req.query.status);
+    }
+    //END lọc theo status
     //Phân trang BACKEND
     const count = await Order.count({
-      where: { deleted: false },
+      where: where,
     });
     const objectPanigation = panigationHelper(
       {
@@ -26,14 +33,6 @@ export const index = async (req: Request, res: Request) => {
       count
     );
     //END phân trang BE;
-
-    //Lọc theo status
-    let statusFilter = '';
-    if(req.query.status){
-        where["status"] = req.query.status,
-        statusFilter = req.query.status
-    }
-    //END lọc theo status
     const orders = await Order.findAll({
       where: where,
       raw: true,
@@ -45,7 +44,7 @@ export const index = async (req: Request, res: Request) => {
       title: "Danh sách đơn hàng",
       orders: orders,
       objectPanigation: objectPanigation,
-      statusFilter: statusFilter
+      statusFilter: statusFilter,
     });
   } catch (error) {
     console.log("Lỗi!", error);
@@ -158,6 +157,6 @@ export const deleteOrder = async (req: Request, res: Response) => {
     req.flash("success", "Đơn hàng đã được hủy thành công!");
     res.redirect(PATH_ADMIN + "/orders");
   } catch (error) {
-    console.log("Lỗi: ", error)
+    console.log("Lỗi: ", error);
   }
 };

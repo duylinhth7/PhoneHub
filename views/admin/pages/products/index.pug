@@ -9,6 +9,11 @@ block main
         input.form-control.me-2(type="text", name="search", value=search || '', placeholder="Tìm sản phẩm...")
         button.btn.btn-outline-secondary(type="submit")
           i.fas.fa-search
+      form(method="GET", action=`${prefixAdmin}/products`, class="d-flex align-items-center")
+        select.form-select(name="featured", onchange="this.form.submit()")
+          option(value="") -- Tất cả --
+          option(value=1, selected=featuredFilter === "1") Nổi bật
+          option(value=0, selected=featuredFilter === "0") Không nổi bật
       a.btn.btn-primary(href=`${prefixAdmin}/products/create`)
         i.fas.fa-plus.me-1
         | Thêm sản phẩm

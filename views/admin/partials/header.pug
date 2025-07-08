@@ -8,8 +8,8 @@ header.header.bg-white.shadow-sm.py-2
                         | ADMIN
             .col-6
                 .d-flex.justify-content-end.align-items-center.gap-2
-                    span.text-muted.me-2 Xin chào, Admin
-                    a(href=`${prefixAdmin}/my-account`, class="btn btn-outline-primary btn-sm")
+                    span.text-muted.me-2 Xin chào, #{accountAdmin.fullname}
+                    a(href=`${prefixAdmin}/accounts/my-account`, class="btn btn-outline-primary btn-sm")
                         i.fas.fa-user.me-1
                         | Tài khoản
                     a(href=`${prefixAdmin}/auth/logout`, class="btn btn-outline-danger btn-sm")

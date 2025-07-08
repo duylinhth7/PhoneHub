@@ -1,0 +1,69 @@
+extends ../../layouts/default.pug
+
+block main
+  .container.mt-5
+    .row.justify-content-center
+      .col-lg-8
+        .card.shadow.rounded-4.border-0
+          .card-body.p-4
+            .d-flex.align-items-center.mb-4
+              i.fas.fa-user-circle.fa-2x.text-primary.me-2
+              h4.mb-0 Thông tin tài khoản cá nhân
+
+            hr
+
+            .row.mb-3
+              .col-sm-4.text-muted
+                i.fas.fa-user.me-2
+                | Họ tên
+              .col-sm-8
+                strong #{account.fullname}
+
+            .row.mb-3
+              .col-sm-4.text-muted
+                i.fas.fa-envelope.me-2
+                | Email
+              .col-sm-8
+                | #{account.email}
+
+            .row.mb-3
+              .col-sm-4.text-muted
+                i.fas.fa-phone.me-2
+                | Số điện thoại
+              .col-sm-8
+                | #{account.phone}
+
+            .row.mb-3
+              .col-sm-4.text-muted
+                i.fas.fa-user-shield.me-2
+                | Vai trò
+              .col-sm-8
+                if account.role === 'admin'
+                  span.badge.bg-danger.text-uppercase Admin
+                else
+                  span.badge.bg-secondary.text-uppercase User
+
+            .row.mb-3
+              .col-sm-4.text-muted
+                i.fas.fa-toggle-on.me-2
+                | Trạng thái
+              .col-sm-8
+                if account.status === 'active'
+                  span.badge.bg-success Kích hoạt
+                else
+                  span.badge.bg-warning.text-dark Chưa kích hoạt
+
+            .row.mb-4
+              .col-sm-4.text-muted
+                i.fas.fa-calendar-alt.me-2
+                | Ngày tạo
+              .col-sm-8
+                | #{new Date(account.createdAt).toLocaleDateString("vi-VN")}
+
+            .text-center.mt-4
+              a.btn.btn-outline-primary.rounded-pill.me-2(href=`${prefixAdmin}/accounts/edit/${account.id}`)
+                i.fas.fa-pen-to-square.me-1
+                | Cập nhật thông tin
+              a.btn.btn-outline-secondary.rounded-pill(href=`${prefixAdmin}/accounts/change-password`)
+                i.fas.fa-key.me-1
+                | Đổi mật khẩu
