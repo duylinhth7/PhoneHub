@@ -49,6 +49,20 @@ block main
           .tab-pane.fade#tabUrl
             textarea.form-control(name="imageUrls", rows="6", placeholder="Mỗi dòng là 1 URL... \nVí dụ:\n[url 1, \n url 2, \n url 3,\n ... ]", oninput="previewImageUrls(this.value)")
             .d-flex.flex-wrap.mt-2#urlPreview
+        .mb-3
+          label.form-label Thông số kỹ thuật
+
+          //- Container cho danh sách thông số kỹ thuật
+          #specifications
+
+            .row.mb-2.spec-item
+              .col-md-5
+                input.form-control(name="tskt_name[]" placeholder="Tên thông số (ví dụ: RAM, Màn hình)", required)
+              .col-md-5
+                input.form-control(name="tskt_value[]" placeholder="Giá trị (ví dụ: 8GB, 6.7 inch)", required)
+              .col-md-2.d-flex.align-items-center
+                button.btn.btn-dark(type="button" addSpecField)
+                  i.fas.fa-plus
 
       .mb-3
         label.form-label(for="description") Mô tả

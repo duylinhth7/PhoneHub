@@ -31,4 +31,13 @@ block main
                         form(id="formAddToCart" phone-id=`${detailProduct.id}`)
                             input(type="number" name="quantity" min=1 max=detailProduct.stock value=1)
                             button(type="submit") Thêm vào giỏ hàng
+                if(detailProduct.tskt)
+                    .col-md-6
+                        .inner-tskt
+                            h4 Thông số kỹ thuật
+                            ul.list-tskt
+                                each item in detailProduct.tskt 
+                                    li
+                                        p #{item.name}:
+                                        div #{item.value}
 

@@ -90,7 +90,7 @@ if (buttonPanigation) {
 //PHẦN READ ONLY EDIT
 const formEdit = document.querySelector("[form-edit]");
 if (formEdit) {
-    const allInput = formEdit.querySelectorAll("input, textarea, select");
+    const allInput = formEdit.querySelectorAll("input, textarea, select, .hidden");
     allInput.forEach(item => {
         item.setAttribute("readonly", true)
         item.setAttribute("disabled", true)
@@ -119,3 +119,44 @@ if (formEdit) {
     })
 }
 //END PHẦN READ ONLY EDIT
+
+
+//PHẦN NHẬP THÔNG SỐ KỸ THUẬT
+const container = document.querySelector("#specifications");
+if (container) {
+    const buttonAddSpecField = document.querySelector("[addSpecField]");
+    buttonAddSpecField.addEventListener("click", () => {
+        const item = document.createElement("div");
+        item.innerHTML = `
+        <div class="row mb-2 spec-item">
+            <div class="col-md-5">
+                <input class="form-control" name="tskt_name[]" placeholder="Tên thông số (ví dụ: RAM, Màn hình)", required />
+            </div>
+            <div class="col-md-5">
+                <input class="form-control" name="tskt_value[]" placeholder="Giá trị (ví dụ: 8GB, 6.7 inch)", required />
+            </div>
+            <div class="col-md-2 d-flex align-items-center">
+                <button class="btn btn-danger" button-remove>
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        `
+        container.appendChild(item);
+        // Gắn sự kiện xóa ngay sau khi tạo
+        const buttonRemove = item.querySelector("[button-remove]");
+        buttonRemove.addEventListener("click", () => {
+            item.remove();
+        });
+    });
+    // Gắn cho nút xóa ban đầu (nếu có)
+    const initialRemoveButtons = container.querySelectorAll("[button-remove]");
+    initialRemoveButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            const item = button.closest(".spec-item");
+            item.remove();
+        });
+    });
+
+}
+//END PHẦN NHẬP THÔNG SỐ KỸ THUẬT

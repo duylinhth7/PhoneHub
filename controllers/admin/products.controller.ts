@@ -78,7 +78,21 @@ export const createPost = async (req: Request, res: Response) => {
       description,
       featured,
       categoryId,
+      tskt_name,
+      tskt_value
     } = req.body;
+    //Xử lý logic tskt
+    let tskt = [];
+    if(tskt_name.length > 0 && tskt_value.length > 0){
+      tskt_name.map((_, index) => {
+        const newTskt = {
+          name: tskt_name[index],
+          value: tskt_value[index]
+        };
+        tskt.push(newTskt)
+      })
+    }
+    //End xử lý logic tskt
     const position = await Product.count();
     const slug = slugify(`${title}-${Date.now()}`, {
       replacement: "-",
@@ -97,6 +111,7 @@ export const createPost = async (req: Request, res: Response) => {
       featured: featured === "true",
       slug,
       position: position + 1,
+      tskt: JSON.stringify(tskt)
     };
 
     //Kiểm tra xem trong DB có sp nào trùng tên không?
@@ -129,6 +144,7 @@ export const detail = async (req: Request, res: Response) => {
       raw: true,
     });
     product["images"] = JSON.parse(product["images"]);
+    product["tskt"] = JSON.parse(product["tskt"])
     res.render("admin/pages/products/detail", {
       title: "Chi tiết sản phẩm",
       product: product,
@@ -152,8 +168,24 @@ export const edit = async (req: Request, res: Response) => {
       imageUrls,
       description,
       featured,
+      tskt_name,
+      tskt_value,
       categoryId,
     } = req.body;
+
+        //Xử lý logic tskt
+    let tskt = [];
+    if(tskt_name.length > 0 && tskt_value.length > 0){
+      tskt_name.map((_, index) => {
+        const newTskt = {
+          name: tskt_name[index],
+          value: tskt_value[index]
+        };
+        tskt.push(newTskt)
+      })
+    }
+    //End xử lý logic tskt
+
     const images = imageUrls
       .split("\r\n")
       .map((url) => url.trim())
@@ -171,6 +203,7 @@ export const edit = async (req: Request, res: Response) => {
       images: JSON.stringify(images),
       description,
       categoryId,
+      tskt: JSON.stringify(tskt),
       featured: featured === "true",
     };
     await Product.update(editProduct, {

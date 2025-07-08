@@ -18,6 +18,7 @@ export const detail = async (req: Request, res: Response) => {
       }
     );
     detailProduct[0]["images"] = JSON.parse(detailProduct[0]["images"]);
+    if(detailProduct[0]["tskt"]) detailProduct[0]["tskt"] = JSON.parse(detailProduct[0]["tskt"]);
     res.render("client/pages/products/detail", {
       title: detailProduct[0]["title"],
       detailProduct: detailProduct[0],

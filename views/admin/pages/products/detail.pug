@@ -60,6 +60,25 @@ block main
           .tab-pane.fade#tabUpload
             input.form-control(type="file", name="imagesFiles", accept="image/*", multiple, onchange="previewImages(event)")
             .d-flex.flex-wrap.mt-2#uploadPreview
+      .mb-3
+        label.form-label Thông số kỹ thuật
+        .col-md-2.d-flex.align-items-center
+          button.btn.btn-dark(type="button" addSpecField class="hidden")
+            i.fas.fa-plus
+
+          //- Container cho danh sách thông số kỹ thuật
+        #specifications
+          if(product.tskt)
+            each item of product.tskt
+              .row.mb-2.spec-item
+                .col-md-5
+                  input.form-control(name="tskt_name[]" placeholder="Tên thông số (ví dụ: RAM, Màn hình)" value=item.name, required)
+                .col-md-5
+                  input.form-control(name="tskt_value[]" placeholder="Giá trị (ví dụ: 8GB, 6.7 inch)", value=item.value required)
+                .col-md-2.d-flex.align-items-center
+                  button.btn.btn-danger(type="button", button-remove class="hidden")
+                      i.fas.fa-minus
+
 
       .mb-3
         label.form-label(for="description") Mô tả
