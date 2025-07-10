@@ -28,8 +28,12 @@ const Users = sequelize.define("Users", {
     type: DataTypes.STRING(20),
     allowNull: true
   },
+  deleted: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true
+  },
   role: {
-    type: DataTypes.ENUM('user', 'admin'),
+    type: DataTypes.ENUM('user', 'admin', "seller", "order-staff"),
     allowNull: false
   },
   createdAt: {

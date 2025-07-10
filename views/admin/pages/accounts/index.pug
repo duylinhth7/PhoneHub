@@ -13,7 +13,9 @@ block main
         select.form-select(name="role", onchange="this.form.submit()")
           option(value="") -- Tất cả --
           option(value="user", selected=roleFillter === "user") Người dùng - user
-          option(value="admin", selected=roleFillter === "admin") Admin - admin
+          option(value="admin", selected=roleFillter === "admin") Admin
+          option(value="seller", selected=roleFillter === "seller") Seller
+          option(value="order-staff", selected=roleFillter === "order-staff") Order-staff
       a.btn.btn-dark(href=`${prefixAdmin}/accounts/create`)
         i.fas.fa-plus.me-1
         | Thêm tài khoản
@@ -36,22 +38,20 @@ block main
             td #{account.email}
             td #{account.phone}
             td 
-              if account.role === 'admin'
-                span.badge.bg-danger.text-uppercase Admin
-              else
-                span.badge.bg-secondary.text-uppercase User
+              span.badge.bg-danger.text-uppercase #{account.role}
             td 
               if account.status === 'active'
                 span.badge.bg-success Kích hoạt
               else
                 span.badge.bg-warning.text-dark Chưa kích hoạt
             td #{new Date(account.createdAt).toLocaleDateString("vi-VN")}
-            td
-              a.btn.btn-sm.btn-outline-primary(href=`/admin/accounts/edit/${account.id}`) 
+            td.d-flex.align-items-center
+              a.btn.btn-sm.btn-outline-primary(href=`/admin/accounts/detail/${account.id}`) 
                 i.fas.fa-pen-to-square
-              a.btn.btn-sm.btn-outline-danger.ms-2(href=`/admin/accounts/delete/${account.id}` onclick="return confirm('Xác nhận xóa tài khoản?')") 
-                i.fas.fa-trash
-
+              form(method="POST", action=`${prefixAdmin}/accounts/delete/${account.id}?_method=DELETE`, class="d-flex align-items-center")
+                button.btn.btn-sm.btn-outline-danger.ms-2(onclick="return confirm('Xác nhận xóa tài khoản?')") 
+                  i.fas.fa-trash
+  
     +panigation(objectPanigation)
 
 block script

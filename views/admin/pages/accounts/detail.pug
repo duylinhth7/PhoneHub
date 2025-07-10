@@ -1,0 +1,47 @@
+extends ../../layouts/default.pug
+
+block main
+  .container.mt-4
+    .d-flex.justify-content-between.align-items-center.mb-4
+      h2.mb-0 Chi tiết tài khoản
+      button.btn.btn-dark#btn-edit(valueCurrent="readonly")
+        i.fas.fa-sync-alt.me-1
+        | Cập nhật
+
+    form(method="POST", action=`${prefixAdmin}/accounts/edit/${account.id}`, form-edit)
+      .row
+        .col-md-6.mb-3
+          label.form-label(for="fullname") Tên tài khoản*
+          input.form-control(type="text", name="fullname", id="fullname", required, value=account.fullname || '')
+
+        .col-md-6.mb-3
+          label.form-label(for="email") Email*
+          input.form-control(type="email", name="email", id="email", required, value=account.email || '')
+
+        .col-md-6.mb-3
+          label.form-label(for="phone") Số điện thoại*
+          input.form-control(type="text", name="phone", id="phone", value=account.phone || '')
+        .col-md-6.mb-3
+          label.form-label(for="password") Mật khẩu*
+          input.form-control(type="text", name="password", id="password" placeholder="Nhập nếu muốn thay đổi password")
+
+        .col-md-6.mb-3
+          label.form-label(for="role") Vai trò*
+          select.form-select(name="role", id="role", required)
+            option(value="") -- Chọn vai trò --
+            option(value="admin", selected=account.role === 'admin') Admin
+            option(value="user", selected=account.role === 'user') User
+            option(value="seller", selected=account.role === 'seller') Seller
+            option(value="order-staff", selected=account.role === 'order-staff') Order-Staff
+
+        .col-md-6.mb-3
+          label.form-label(for="status") Trạng thái*
+          select.form-select(name="status", id="status", required)
+            option(value="active", selected=account.status === 'active') Đang hoạt động
+            option(value="inactive", selected=account.status === 'inactive') Vô hiệu hóa
+
+      button.btn.d-none.btn-dark#btn-submit-edit(type="submit")
+        i.fas.fa-save.me-1
+        | Cập nhật tài khoản
+
+      a.btn.btn-secondary.ms-2(href=`${prefixAdmin}/accounts`) Quay lại

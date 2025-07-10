@@ -38,10 +38,7 @@ block main
                 i.fas.fa-user-shield.me-2
                 | Vai trò
               .col-sm-8
-                if account.role === 'admin'
-                  span.badge.bg-danger.text-uppercase Admin
-                else
-                  span.badge.bg-secondary.text-uppercase User
+                span.badge.bg-danger.text-uppercase #{account.role}
 
             .row.mb-3
               .col-sm-4.text-muted
@@ -61,7 +58,7 @@ block main
                 | #{new Date(account.createdAt).toLocaleDateString("vi-VN")}
 
             .text-center.mt-4
-              a.btn.btn-outline-primary.rounded-pill.me-2(href=`${prefixAdmin}/accounts/edit/${account.id}`)
+              a.btn.btn-outline-primary.rounded-pill.me-2(href=`${prefixAdmin}/accounts/detail/${account.id}`)
                 i.fas.fa-pen-to-square.me-1
                 | Cập nhật thông tin
               a.btn.btn-outline-secondary.rounded-pill(href=`${prefixAdmin}/accounts/change-password`)

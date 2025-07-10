@@ -34,16 +34,25 @@ block main
                 td #{order.address}
                 td #{order.note}
                 td
-                  if order.status === "initial"
-                    button.badge.bg-secondary(value=order.status button-order id=order.id) Đang chờ xác nhận
-                  if order.status === "confirmed"
-                    button.badge.bg-success(value=order.status button-order id=order.id) Đã xác nhận
+                  //Check nếu role = seller thì không được phép, vì còn 2 quyền admin và order-staff dc phép sửa
+                  if(accountAdmin.role !== "seller")
+                    if order.status === "initial"
+                      button.badge.bg-secondary(value=order.status button-order id=order.id) Đang chờ xác nhận
+                    if order.status === "confirmed"
+                      button.badge.bg-success(value=order.status button-order id=order.id) Đã xác nhận
+                  else 
+                    if order.status === "initial"
+                      button.badge.bg-secondary Đang chờ xác nhận
+                    if order.status === "confirmed"
+                      button.badge.bg-success Đã xác nhận
                 td #{new Date(order.createdAt).toLocaleString('vi-VN')}
                 td.text-center
                   a.btn.btn-sm.btn-warning.me-1(href=`${prefixAdmin}/orders/detail/${order.id}`)
                     i.fas.fa-eye
-                  form(action=`${prefixAdmin}/orders/delete/${order.id}?_method=DELETE`, method="POST", style="display: inline")
-                    button.btn.btn-sm.btn-outline-danger(type="submit" onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')") Xóa
+                  //Check nếu role = seller thì không được phép, vì còn 2 quyền admin và order-staff dc phép xóa
+                  if(accountAdmin.role !== "seller")
+                    form(action=`${prefixAdmin}/orders/delete/${order.id}?_method=DELETE`, method="POST", style="display: inline")
+                      button.btn.btn-sm.btn-outline-danger(type="submit" onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')") Xóa
     else    
       .alert.alert-info Không có đơn hàng nào.
     +panigation(objectPanigation)

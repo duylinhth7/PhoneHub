@@ -6,30 +6,35 @@
             a(href=`${prefixAdmin}/dashboard`, class="d-flex align-items-center gap-2")
                 i.fas.fa-th-large
                 | Tổng quan
-        li.list-group-item
-            a(href=`${prefixAdmin}/settings/general`, class="d-flex align-items-center gap-2")
-                i.fas.fa-cogs
-                | Cài đặt chung
-        li.list-group-item
-            a(href=`${prefixAdmin}/products`, class="d-flex align-items-center gap-2")
-                i.fas.fa-music
-                | Danh sách sản phẩm
-        li.list-group-item
-            a(href=`${prefixAdmin}/categories`, class="d-flex align-items-center gap-2")
-                i.fas.fa-tags
-                | Danh mục sản phẩm
-        li.list-group-item
-            a(href=`${prefixAdmin}/accounts`, class="d-flex align-items-center gap-2")
-                i.fas.fa-user-lock
-                | Danh sách tài khoản
+        if(accountAdmin.role === "admin")
+            li.list-group-item
+                a(href=`${prefixAdmin}/settings/general`, class="d-flex align-items-center gap-2")
+                    i.fas.fa-cogs
+                    | Cài đặt chung
+        if(accountAdmin.role !== "order-staff")
+            li.list-group-item
+                a(href=`${prefixAdmin}/products`, class="d-flex align-items-center gap-2")
+                    i.fas.fa-music
+                    | Danh sách sản phẩm
+        if(accountAdmin.role !== "order-staff")
+            li.list-group-item
+                a(href=`${prefixAdmin}/categories`, class="d-flex align-items-center gap-2")
+                    i.fas.fa-tags
+                    | Danh mục sản phẩm
+        if(accountAdmin.role === "admin")
+            li.list-group-item
+                a(href=`${prefixAdmin}/accounts`, class="d-flex align-items-center gap-2")
+                    i.fas.fa-user-lock
+                    | Danh sách tài khoản
         li.list-group-item
             a(href=`${prefixAdmin}/orders`, class="d-flex align-items-center gap-2")
                 i.fas.fa-cart-shopping
                 | Danh sách đơn hàng
-        li.list-group-item
-            a(href=`${prefixAdmin}/role`, class="d-flex align-items-center gap-2")
-                i.fas.fa-user-shield
-                | Nhóm quyền
+        if(accountAdmin.role === "admin")
+            li.list-group-item
+                a(href=`${prefixAdmin}/role`, class="d-flex align-items-center gap-2")
+                    i.fas.fa-user-shield
+                    | Nhóm quyền
         //- li.list-group-item
         //-     a(href=`${prefixAdmin}/role/permission`, class="d-flex align-items-center gap-2")
         //-         i.fas.fa-user-lock

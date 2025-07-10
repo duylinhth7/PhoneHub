@@ -1,3 +1,34 @@
 extends ../../layouts/default.pug
+
 block main
-    h2 ok
+  .container.mt-4
+    h2.mb-4 Tổng quan hệ thống
+
+    .row
+      .col-md-3.mb-4
+        .card.shadow-sm.border-start.border-primary.border-4
+          .card-body.text-center
+            i.fas.fa-users.fa-2x.mb-2.text-primary
+            h5.mb-1 Tài khoản
+            h3.text-dark #{countAccount}
+
+      .col-md-3.mb-4
+        .card.shadow-sm.border-start.border-success.border-4
+          .card-body.text-center
+            i.fas.fa-shopping-cart.fa-2x.mb-2.text-success
+            h5.mb-1 Đơn hàng
+            h3.text-dark #{countOrder}
+
+      .col-md-3.mb-4
+        .card.shadow-sm.border-start.border-warning.border-4
+          .card-body.text-center
+            i.fas.fa-box-open.fa-2x.mb-2.text-warning
+            h5.mb-1 Sản phẩm
+            h3.text-dark #{countProduct}
+
+      .col-md-3.mb-4
+        .card.shadow-sm.border-start.border-danger.border-4
+          .card-body.text-center
+            i.fas.fa-layer-group.fa-2x.mb-2.text-danger
+            h5.mb-1 Danh mục
+            h3.text-dark #{countCategories}
