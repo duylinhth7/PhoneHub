@@ -1,43 +1,92 @@
-extends ../../layouts/default
+extends ../../layouts/default.pug
+include ../../mixins/panigation.pug
+
 block css 
-    link(rel="stylesheet", href="/css/product-detail.css")
+  link(rel="stylesheet", href="/css/product-detail.css")
 
 block main 
-    .product-detail 
-        .container 
-            .row 
-                .col-6 
-                    .inner-images 
-                        div(class="swiper mySwiper2")
-                            div(class="swiper-wrapper")
-                                each image in detailProduct.images 
-                                    div(class="swiper-slide")
-                                        img(src=image)
-                            div(class="swiper-button-next")
-                            div(class="swiper-button-prev")
-                        div(class="swiper mySwiper")
-                            div(class="swiper-wrapper")
-                                each image in detailProduct.images 
-                                    div(class="swiper-slide")
-                                        img(src=image)
-                .col-md-6
-                    .inner-info
-                        h3.title= detailProduct.title
-                        .special_price Giá đặc biệt: #{(+detailProduct.special_price).toLocaleString('vi-VN')}₫
-                        .old_price Giá cũ: #{(+detailProduct.price).toLocaleString('vi-VN')}₫
-                        .discount Giảm tới: #{detailProduct.discount}%
-                        .stock Số lượng còn lại: #{detailProduct.stock}
+  .product-detail 
+    .container 
+      .row
+        // === CỘT TRÁI: ẢNH + TSKT ===
+        .col-md-6
+          .inner-images 
+            div(class="swiper mySwiper2")
+              div(class="swiper-wrapper")
+                each image in detailProduct.images 
+                  div(class="swiper-slide")
+                    img(src=image)
+              div(class="swiper-button-next")
+              div(class="swiper-button-prev")
+            div(class="swiper mySwiper")
+              div(class="swiper-wrapper")
+                each image in detailProduct.images 
+                  div(class="swiper-slide")
+                    img(src=image)
 
-                        form(id="formAddToCart" phone-id=`${detailProduct.id}`)
-                            input(type="number" name="quantity" min=1 max=detailProduct.stock value=1)
-                            button(type="submit") Thêm vào giỏ hàng
-                if(detailProduct.tskt)
-                    .col-md-6
-                        .inner-tskt
-                            h4 Thông số kỹ thuật
-                            ul.list-tskt
-                                each item in detailProduct.tskt 
-                                    li
-                                        p #{item.name}:
-                                        div #{item.value}
+          if detailProduct.tskt
+            .inner-tskt.mt-4
+              h4 Thông số kỹ thuật
+              ul.list-tskt
+                each item in detailProduct.tskt 
+                  li
+                    p #{item.name}:
+                    div #{item.value}
 
+        // === CỘT PHẢI: INFO + REVIEW ===
+        .col-md-6
+          .inner-info
+            h3.title= detailProduct.title
+            .special_price Giá đặc biệt: #{(+detailProduct.special_price).toLocaleString('vi-VN')}₫
+            .old_price Giá cũ: #{(+detailProduct.price).toLocaleString('vi-VN')}₫
+            .discount Giảm tới: #{detailProduct.discount}%
+            .stock Số lượng còn lại: #{detailProduct.stock}
+
+            form(id="formAddToCart" phone-id=`${detailProduct.id}`)
+              input(type="number" name="quantity" min=1 max=detailProduct.stock value=1)
+              button(type="submit") Thêm vào giỏ hàng
+
+          // REVIEW SECTION
+          .review-section.mt-4
+            h4.mb-3 Đánh giá sản phẩm
+
+            .review-list
+              if reviews.length > 0
+                each review in reviews
+                  .review-item.mb-3.p-3(style="border: 1px solid #ccc; border-radius: 8px;" userId=review.userId)
+                    if userId
+                      strong= review.userId === user.userId ? "Bạn" : review.fullname
+                    else
+                      strong= review.fullname
+                    span.text-muted.ml-2 
+                      small= new Date(review.createdAt).toLocaleDateString('vi-VN')
+                    .rating ⭐ #{review.rating} / 5
+                    p.mt-1= review.comment
+                +panigation(objectPanigation)
+              else
+                p Chưa có đánh giá nào cho sản phẩm này.
+            if(user)
+                // FORM ĐÁNH GIÁ
+                form(from-add-reviews productId=detailProduct.id)
+                    input(type="hidden", name="productId", value=detailProduct.id)
+                    .form-group
+                        label(for="rating" class='mt-4')
+                        b Đánh giá:
+                        select(name="rating", id="rating", class="form-control", required)
+                            option(value="") Chọn số sao
+                                each val in [5,4,3,2,1]
+                                    option(value=val)= `${val} sao`
+                    .form-group
+                        label(for="comment") Nhận xét:
+                        textarea.form-control(name="comment", id="comment", rows="3", required)
+                    button.btn.btn-primary.mt-2(type="submit") Gửi đánh giá
+            else
+                .alert.alert-warning.mt-4(role="alert")
+                    h5.mb-0.text-center
+                    i.fas.fa-exclamation-circle.mr-2
+                    | Vui lòng 
+                    a(href="/users/login", class="text-primary font-weight-bold") đăng nhập 
+                    | để đánh giá sản phẩm.
+
+block script 
+  script(src="/js/reviews.js")

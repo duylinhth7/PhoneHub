@@ -24,6 +24,7 @@ block main
           thead.table-light
             tr
               th STT
+              th ID
               th Hình ảnh
               th Tên sản phẩm
               th Giá
@@ -36,6 +37,7 @@ block main
             each product, index in products
               tr
                 td #{index + 1}
+                td #{product.id}
                 td
                   img(src=product.image, alt="Ảnh sản phẩm", style="width: 60px; height: 60px; object-fit: cover; border-radius: 6px;")
                 td #{product.title}
