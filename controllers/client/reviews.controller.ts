@@ -33,3 +33,23 @@ export const addReview = async (req:Request, res:Response) => {
         res.status(400).message("Lỗi: ", error)
     }
 }
+
+//[DELETE] /review/delete
+export const deleteReview = async (req:Request, res:Response) => {
+    try {
+        const id = req.params.id;
+        await Reviews.destroy({
+            where: {
+                id: id
+            }
+        });
+        return res.status(200).json({
+            message: "Xóa thành công!"
+        })
+    } catch (error) {
+        console.log("Lỗi: ", error)
+        res.status(400).json({
+            message: "Lỗi!"
+        })
+    }
+}

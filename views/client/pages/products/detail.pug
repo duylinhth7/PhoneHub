@@ -53,8 +53,16 @@ block main
             .review-list
               if reviews.length > 0
                 each review in reviews
-                  .review-item.mb-3.p-3(style="border: 1px solid #ccc; border-radius: 8px;" userId=review.userId)
-                    if userId
+                  .review-item.mb-3.p-3.position-relative(style="border: 1px solid #ccc; border-radius: 8px;" userId=review.userId review-id=review.id)
+                    if user && review.userId === user.userId
+                      button.btn.btn-sm.btn-outline.position-absolute(
+                        delete-review
+                        data-id=review.id 
+                        title="Xóa đánh giá" 
+                        style="top: 8px; right: 8px; border: none; background: transparent;"
+                      )
+                        i.fas.fa-trash
+                    if user
                       strong= review.userId === user.userId ? "Bạn" : review.fullname
                     else
                       strong= review.fullname
@@ -62,9 +70,10 @@ block main
                       small= new Date(review.createdAt).toLocaleDateString('vi-VN')
                     .rating ⭐ #{review.rating} / 5
                     p.mt-1= review.comment
-                +panigation(objectPanigation)
               else
-                p Chưa có đánh giá nào cho sản phẩm này.
+                .alert.alert-success.text-center
+                  p.font-weight-bold Chưa có đánh giá nào cho sản phẩm này.
+            +panigation(objectPanigation)
             if(user)
                 // FORM ĐÁNH GIÁ
                 form(from-add-reviews productId=detailProduct.id)

@@ -21,7 +21,8 @@ if (fromAddReviews) {
                 if (data) {
                     const reviewList = document.querySelector(".review-list");
                     const html = `
-                    <div class="review-item mb-3 p-3" style="border: 1px solid #ccc; border-radius: 8px;">
+                    <div class="review-item position-relative mb-3 p-3" 
+                    style="border: 1px solid #ccc; border-radius: 8px;">
                         <strong>
                             Bạn
                         </strong>
@@ -47,3 +48,28 @@ if (fromAddReviews) {
     })
 }
 //END PHẦN SCRIPT ĐÁNH GIÁ, COMMENT SẢN PHẨM
+
+//PHẦN XÓA ĐÁNH GIÁ SẢN PHẨM
+const deleteReview = document.querySelectorAll("[delete-review]");
+if(deleteReview){
+    //Tìm thẻ cha;
+    const reviewList = document.querySelector(".review-list");
+
+    //Tìm thẻ có id trùng bị xóa
+    deleteReview.forEach(button => {
+        button.addEventListener("click", () => {
+            const id = button.getAttribute("data-id");
+            const elementDeleted = reviewList.querySelector(`[review-id='${id}']`);
+            //Fetch API
+            fetch(`/reviews/delete/${id}`, {
+                method: "DELETE"
+            })
+                .then(res => {
+                    if(res.ok){
+                        reviewList.removeChild(elementDeleted);
+                    }
+                })
+        })
+    })
+}
+//END PHẦN XÓA ĐÁNH GIÁ SẢN PHẨM
