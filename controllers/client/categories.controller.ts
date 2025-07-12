@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import Categories from "../../models/categories.model";
 import Product from "../../models/product.model";
 import panigationHelper from "../../helpers/panigation";
-import { raw } from "mysql2";
 // [GET] /categories
 export const index = async (req: Request, res: Response) => {
   try {
@@ -52,11 +51,10 @@ export const detail = async (req: Request, res: Response) => {
     //Phần SORT theo giá
     let typeSort = "createdAt";
     let sort = "DESC";
-    if (req.query.sort && req.query.sort !== "createdAt") {
+      const rawSort = req.query.sort?.toString().toLowerCase();
+    if (rawSort === "asc" || rawSort === "desc") {
       typeSort = "price";
       sort = req.query.sort;
-    } else {
-        typeSort = "createdAt"
     }
     //END SORT theo giá
     const products = await Product.findAll({

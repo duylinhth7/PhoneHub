@@ -1,0 +1,6 @@
+mixin sortProduct(baseUrl)
+    // Phần sort dạng button group
+    .btn-group(role="group" aria-label="Sort options")
+        button.btn.btn-sm(class=sort === 'createdAt' ? 'btn-danger' : 'btn-outline-danger' button-sort="createdAt") Mặc định
+        button.btn.btn-sm(class=sort === 'asc' ? 'btn-danger' : 'btn-outline-danger' button-sort="asc") Giá tăng dần
+        button.btn.btn-sm(class=sort === 'desc' ? 'btn-danger' : 'btn-outline-danger' button-sort="desc") Giá giảm dần

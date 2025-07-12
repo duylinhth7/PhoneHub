@@ -284,3 +284,18 @@ if (formSeach) {
     })
 }
 //END PHẦN SEARCH SUGGEST
+
+
+//Phần SORT PRODUCT
+const buttonSort = document.querySelectorAll("[button-sort]");
+if(buttonSort){
+    const url = new URL(window.location.href);
+    buttonSort.forEach(button => {
+        button.addEventListener("click", () => {  
+            const value = button.getAttribute("button-sort");
+            url.searchParams.set("sort", value);
+            window.location.href = url.href;
+        })
+    })
+}
+//END Phần SORT PRODUCT

@@ -1,18 +1,18 @@
 //- views/client/includes/mixins.pug
-
+block css
+  link(rel="stylesheet", href="/css/product.css")
 mixin productCard(products)
-  .container
-    .row
-      each product in products
-        .col-md-3.col-sm-6.mb-4
-          a(class="product-card" href=`/products/${product.slug}`)
-            .image
-              img(src=product.image, alt=product.title)
-              if product.discount
-                span.discount Giảm #{product.discount}%
-            .title
-              h3 #{product.title}
-            .price
-              h3.special_price #{(+product.special_price).toLocaleString('vi-VN')} ₫
-              if product.discount
-                h3.old_price #{product.price.toLocaleString()} ₫
+  .row
+    each product in products
+      .col-md-3.col-sm-6.mb-4
+        a(class="product-card" href=`/products/${product.slug}`)
+          .image
+            img(src=product.image, alt=product.title)
+            if product.discount
+              span.discount Giảm #{product.discount}%
+          .title
+            h3 #{product.title}
+          .price
+            h3.special_price #{(+product.special_price).toLocaleString('vi-VN')} ₫
+            if product.discount
+              h3.old_price #{product.price.toLocaleString()} ₫

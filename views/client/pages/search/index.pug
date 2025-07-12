@@ -1,0 +1,29 @@
+extends ../../layouts/default.pug
+include ../../mixins/productCard.pug
+include ../../mixins/sortProduct.pug
+include ../../mixins/panigation.pug
+
+block main
+  .container.py-4
+
+    // Tiêu đề trang
+    .mb-4
+      h2.fw-bold.text-uppercase.text-dark Kết quả tìm kiếm sản phẩm
+      hr
+
+    if products.length > 0
+      // Phần sort nằm bên phải
+      .d-flex.justify-content-end.align-items-center.mb-3
+        +sortProduct(products)
+
+      // Danh sách sản phẩm
+      +productCard(products)
+
+      // Phân trang
+      +panigation(objectPanigation)
+    else
+      .text-center.mt-5
+        .alert.alert-warning.mt-4
+          | Không tìm thấy sản phẩm nào phù hợp với tìm kiếm của bạn.
+        i.fas.fa-search.fa-2x.mt-3.text-secondary
+        p.text-muted.mt-2 Vui lòng thử lại với từ khóa khác hoặc kiểm tra bộ lọc.
