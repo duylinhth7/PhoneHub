@@ -3,10 +3,44 @@ header.header.bg-light.shadow-sm.py-3
     .d-flex.justify-content-between.align-items-center
       // Logo
       a(href="/" class="text-decoration-none")
-        h2.text-primary.mb-0 Logo
-      
+        h5.text-primary.mb-0 PhoneHub
+      div.position-relative
+        form.d-flex#search-form(action="/search", method="GET", style="border: 2px solid #000; border-radius: 5px;")
+          input#search-input.form-control.me-2(
+            type="text",
+            name="q",
+            placeholder="Bạn đang tìm kiếm sản phẩm gì...",
+            style="width: 500px",
+            autocomplete="off"
+          )
+          button.btn.btn-dark(type="submit")
+            i.fa-solid.fa-magnifying-glass
+
+        //- Hộp gợi ý kết quả
+        ul#search-suggest.list-group.position-absolute.w-100.shadow(style="top: 100%; left: 0; z-index: 1000; display: none;")
+
+      ul.nav
+        li.nav-item
+          a.nav-link.text-dark(href="/cart")
+            | Giỏ hàng (
+            span(mini-cart) 0
+            | )
+        if user
+          li.nav-item
+            a.nav-link.text-dark(href="/order")
+              | Đơn hàng
+              if user
+                span &nbsp;(#{totalOrders})
+          li.nav-item
+            a.nav-link.text-danger(href="/users/logout") Đăng xuất        
+        else 
+          li.nav-item
+            a.nav-link.text-dark(href="/users/login") Đăng nhập
+          li.nav-item
+            a.nav-link.text-dark(href="/users/register") Đăng ký
+
       // Menu
-      nav
+      //- nav
         ul.nav
           li.nav-item
             a.nav-link.text-dark(href="/") Trang chủ

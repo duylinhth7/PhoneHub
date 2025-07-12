@@ -8,6 +8,7 @@ import { cartRoute } from "./cart.route";
 import { orderRoute } from "./order.route";
 import { categoriesRoute } from "./categories.routes";
 import { reviewsRoute } from "./reviews.route";
+import { searchRoute } from "./search.route";
 
 export const routesClient = (app: Express) => {
     app.use(authentication);
@@ -19,4 +20,5 @@ export const routesClient = (app: Express) => {
     app.use("/order", orderRoute);
     app.use("/categories", categoriesRoute)
     app.use("/reviews", reviewsRoute)
+    app.use("/search", searchRoute)
 }

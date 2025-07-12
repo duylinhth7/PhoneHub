@@ -225,10 +225,10 @@ if (formOrder) {
 
 //PHẦN SLICK SLIDER
 $('.product-slider').slick({
-  slidesToShow: 4,
-  slidesToScroll: 1,
-  autoplay: true,
-  autoplaySpeed: 900,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 900,
 });
 // END PHẦN SLICK SLIDER
 
@@ -245,3 +245,42 @@ if (buttonPanigation) {
     })
 }
 //END PANIGATION - PHÂN TRANG
+
+
+//PHẦN SEARCH SUGGEST
+const formSeach = document.querySelector("#search-form");
+if (formSeach) {
+    formSeach.addEventListener("keyup", (e) => {
+        const value = e.target.value.trim();
+        const suggestBox = document.querySelector("#search-suggest");
+        //FETCH API SEARCH
+        fetch(`/search/suggest?q=${value}`, {
+            method: "GET"
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data !== 400) {
+                    // Tạo gợi ý
+                    suggestBox.innerHTML = data.map(p => `
+                    <li class="list-group-item">
+                        <a href="/products/${p.slug}" class="text-decoration-none text-dark d-flex align-items-center">'
+                            <img src="${p.image}" style="width: 40px; height: 40px; object-fit: cover; margin-right: 10px;" />
+                            <b>${p.title}</b>
+                        </a>
+                    </li>
+                    `).join("");
+                    suggestBox.style.display = "block";
+                } else {
+                    suggestBox.innerHTML = `<li class="list-group-item">Không tìm thấy sản phẩm...</li>`
+                    suggestBox.style.display = "block";
+                }
+            });
+        // Ẩn gợi ý khi click ra ngoài
+        document.addEventListener("click", (e) => {
+            if (!e.target.closest(".form-search")) {
+                suggestBox.style.display = "none";
+            }
+        });
+    })
+}
+//END PHẦN SEARCH SUGGEST
